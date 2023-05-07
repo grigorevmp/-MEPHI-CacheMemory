@@ -1,0 +1,6 @@
+verilog xil_defaultlib  \
+"../../../../cache.gen/sources_1/ip/cpu_to_cache_fifo/sim/cpu_to_cache_fifo.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort

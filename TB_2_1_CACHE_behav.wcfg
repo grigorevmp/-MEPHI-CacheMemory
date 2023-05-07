@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="TB_2_1_CACHE_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="TB_2_1_CACHE" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,709.001 ns"></ZoomEndTime>
+      <Cursor1Time time="650.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="310"></NameColumnWidth>
+      <ValueColumnWidth column_width="116"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="56" />
+   <wvobject fp_name="/TB_2_1_CACHE/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ram_reset" type="logic">
+      <obj_property name="ElementShortName">ram_reset</obj_property>
+      <obj_property name="ObjectShortName">ram_reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/addr" type="array">
+      <obj_property name="ElementShortName">addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/WData" type="array">
+      <obj_property name="ElementShortName">WData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">WData[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/wr_cpu" type="logic">
+      <obj_property name="ElementShortName">wr_cpu</obj_property>
+      <obj_property name="ObjectShortName">wr_cpu</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/rd_cpu" type="logic">
+      <obj_property name="ElementShortName">rd_cpu</obj_property>
+      <obj_property name="ObjectShortName">rd_cpu</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/Ram_Data" type="array">
+      <obj_property name="ElementShortName">Ram_Data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">Ram_Data[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ram_ack" type="logic">
+      <obj_property name="ElementShortName">ram_ack</obj_property>
+      <obj_property name="ObjectShortName">ram_ack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/bval" type="array">
+      <obj_property name="ElementShortName">bval[3:0]</obj_property>
+      <obj_property name="ObjectShortName">bval[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/CPU_RData" type="array">
+      <obj_property name="ElementShortName">CPU_RData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CPU_RData[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ack" type="logic">
+      <obj_property name="ElementShortName">ack</obj_property>
+      <obj_property name="ObjectShortName">ack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/Rnw" type="logic">
+      <obj_property name="ElementShortName">Rnw</obj_property>
+      <obj_property name="ObjectShortName">Rnw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/Addr_ram" type="array">
+      <obj_property name="ElementShortName">Addr_ram[11:0]</obj_property>
+      <obj_property name="ObjectShortName">Addr_ram[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/WData_ram" type="array">
+      <obj_property name="ElementShortName">WData_ram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">WData_ram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/AValid" type="logic">
+      <obj_property name="ElementShortName">AValid</obj_property>
+      <obj_property name="ObjectShortName">AValid</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider63">
+      <obj_property name="label">Control Unit</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cu/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cu/ack" type="logic">
+      <obj_property name="ElementShortName">ack</obj_property>
+      <obj_property name="ObjectShortName">ack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cu/wr" type="logic">
+      <obj_property name="ElementShortName">wr</obj_property>
+      <obj_property name="ObjectShortName">wr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cu/hit" type="logic">
+      <obj_property name="ElementShortName">hit</obj_property>
+      <obj_property name="ObjectShortName">hit</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cu/w_sel" type="logic">
+      <obj_property name="ElementShortName">w_sel</obj_property>
+      <obj_property name="ObjectShortName">w_sel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/t_sel" type="logic">
+      <obj_property name="ElementShortName">t_sel</obj_property>
+      <obj_property name="ObjectShortName">t_sel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cu/ram_wr" type="logic">
+      <obj_property name="ElementShortName">ram_wr</obj_property>
+      <obj_property name="ObjectShortName">ram_wr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cu/ram_rd" type="logic">
+      <obj_property name="ElementShortName">ram_rd</obj_property>
+      <obj_property name="ObjectShortName">ram_rd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/Ack" type="logic">
+      <obj_property name="ElementShortName">Ack</obj_property>
+      <obj_property name="ObjectShortName">Ack</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider71">
+      <obj_property name="label">CPU_IF</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_Wr" type="logic">
+      <obj_property name="ElementShortName">cache_Wr</obj_property>
+      <obj_property name="ObjectShortName">cache_Wr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_Rd" type="logic">
+      <obj_property name="ElementShortName">cache_Rd</obj_property>
+      <obj_property name="ObjectShortName">cache_Rd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_WData" type="array">
+      <obj_property name="ElementShortName">cache_WData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cache_WData[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_Addr" type="array">
+      <obj_property name="ElementShortName">cache_Addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">cache_Addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cpu_clk" type="logic">
+      <obj_property name="ElementShortName">cpu_clk</obj_property>
+      <obj_property name="ObjectShortName">cpu_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_Ack" type="logic">
+      <obj_property name="ElementShortName">cache_Ack</obj_property>
+      <obj_property name="ObjectShortName">cache_Ack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/RData" type="array">
+      <obj_property name="ElementShortName">RData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">RData[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/Ack" type="logic">
+      <obj_property name="ElementShortName">Ack</obj_property>
+      <obj_property name="ObjectShortName">Ack</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider72">
+      <obj_property name="label">Ram IF</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ram_clk" type="logic">
+      <obj_property name="ElementShortName">ram_clk</obj_property>
+      <obj_property name="ObjectShortName">ram_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/state" type="array">
+      <obj_property name="ElementShortName">state[4:0]</obj_property>
+      <obj_property name="ObjectShortName">state[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/Addr_ram" type="array">
+      <obj_property name="ElementShortName">Addr_ram[11:0]</obj_property>
+      <obj_property name="ObjectShortName">Addr_ram[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/WData_ram" type="array">
+      <obj_property name="ElementShortName">WData_ram[15:0]</obj_property>
+      <obj_property name="ObjectShortName">WData_ram[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/rd" type="logic">
+      <obj_property name="ElementShortName">rd</obj_property>
+      <obj_property name="ObjectShortName">rd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/wr" type="logic">
+      <obj_property name="ElementShortName">wr</obj_property>
+      <obj_property name="ObjectShortName">wr</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">TEG MEM</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/m/chan" type="array">
+      <obj_property name="ElementShortName">chan[1:0]</obj_property>
+      <obj_property name="ObjectShortName">chan[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/m/index" type="array">
+      <obj_property name="ElementShortName">index[3:0]</obj_property>
+      <obj_property name="ObjectShortName">index[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/m/tegOut" type="array">
+      <obj_property name="ElementShortName">tegOut[9:0]</obj_property>
+      <obj_property name="ObjectShortName">tegOut[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/m/hit" type="logic">
+      <obj_property name="ElementShortName">hit</obj_property>
+      <obj_property name="ObjectShortName">hit</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ATEG_WIDTH" type="array">
+      <obj_property name="ElementShortName">ATEG_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ATEG_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/AINDEX_WIDTH" type="array">
+      <obj_property name="ElementShortName">AINDEX_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">AINDEX_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/AOFFSET_WIDTH" type="array">
+      <obj_property name="ElementShortName">AOFFSET_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">AOFFSET_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/CHANNEL_WIDTH" type="array">
+      <obj_property name="ElementShortName">CHANNEL_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CHANNEL_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/W_DATA_WIDTH" type="array">
+      <obj_property name="ElementShortName">W_DATA_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">W_DATA_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/SYS_WIDTH" type="array">
+      <obj_property name="ElementShortName">SYS_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">SYS_WIDTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/CACHE_LINE" type="array">
+      <obj_property name="ElementShortName">CACHE_LINE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CACHE_LINE[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/RAM_LINE" type="array">
+      <obj_property name="ElementShortName">RAM_LINE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">RAM_LINE[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/RAM_ADDR_WIDTH" type="array">
+      <obj_property name="ElementShortName">RAM_ADDR_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">RAM_ADDR_WIDTH[31:0]</obj_property>
+   </wvobject>
+</wave_config>

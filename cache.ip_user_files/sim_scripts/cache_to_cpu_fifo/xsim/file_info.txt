@@ -1,0 +1,2 @@
+cache_to_cpu_fifo.v,verilog,xil_defaultlib,../../../../cache.gen/sources_1/ip/cache_to_cpu_fifo/sim/cache_to_cpu_fifo.v,
+glbl.v,Verilog,xil_defaultlib,glbl.v
