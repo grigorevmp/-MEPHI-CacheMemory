@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TB_2_2_CACHE();
+module TB_2_1_CACHE();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
@@ -223,4 +223,5 @@ module TB_2_2_CACHE();
         
         $finish;
     end 
+  
 endmodule

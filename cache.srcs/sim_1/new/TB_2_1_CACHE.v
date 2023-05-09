@@ -113,6 +113,7 @@ module TB_2_1_CACHE();
         cpu_reset = 1;
         
         @(negedge clk);
+        @(negedge clk);
         
         reset = 0;
         ram_reset = 0;
@@ -126,21 +127,20 @@ module TB_2_1_CACHE();
         
         
         addr = 16'b00110011_0011_0000;
-        rd_cpu = 1;
+        wr_cpu = 1;
         
-        WData = 3;
-        Ram_Data = 32;
+        WData = 10;
         bval = 0;
 
         ram_ack = 1;
         en_cpu = 1;
+        Ram_Data = 20;
         
         @(negedge clk);
         
         en_cpu = 0;
         addr = 16'bx;
         WData = 'bx;
-        Ram_Data = 32;
         bval = 'bx;
         ram_ack = 1;
         rd_cpu = 0;
@@ -185,6 +185,356 @@ module TB_2_1_CACHE();
         @(negedge clk);
         @(negedge clk);
         @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        ram_ack = 0;
+        rd_cpu = 0;
+        wr_cpu = 0;
+        
+        
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+        
+        
+        addr = 16'b00110001_0001_0000;
+        wr_cpu = 1;
+        
+        WData = 11;
+        bval = 0;
+
+        ram_ack = 1;
+        en_cpu = 1;
+        Ram_Data = 21;
+        
+        @(negedge clk);
+        
+        en_cpu = 0;
+        addr = 16'bx;
+        WData = 'bx;
+        bval = 'bx;
+        ram_ack = 1;
+        rd_cpu = 0;
+        wr_cpu = 0;
+        
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        ram_ack = 0;
+        rd_cpu = 0;
+        wr_cpu = 0;
+        
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+        
+        
+        addr = 16'b00110001_0010_0000;
+        wr_cpu = 1;
+        
+        WData = 12;
+        bval = 0;
+
+        ram_ack = 1;
+        en_cpu = 1;
+        Ram_Data = 22;
+        
+        @(negedge clk);
+        
+        en_cpu = 0;
+        addr = 16'bx;
+        WData = 'bx;
+        bval = 'bx;
+        ram_ack = 1;
+        rd_cpu = 0;
+        wr_cpu = 0;
+        
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        ram_ack = 0;
+        rd_cpu = 0;
+        wr_cpu = 0;
+        
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+        
+        
+        addr = 16'b00110000_0010_0000;
+        wr_cpu = 1;
+        
+        WData = 13;
+        bval = 0;
+
+        ram_ack = 1;
+        en_cpu = 1;
+        Ram_Data = 23;
+        
+        @(negedge clk);
+        
+        en_cpu = 0;
+        addr = 16'bx;
+        WData = 'bx;
+        bval = 'bx;
+        ram_ack = 1;
+        rd_cpu = 0;
+        wr_cpu = 0;
+        
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        ram_ack = 0;
+        rd_cpu = 0;
+        wr_cpu = 0;
+        
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+        
+        
+        addr = 16'b00110100_0110_0000;
+        wr_cpu = 1;
+        
+        WData = 14;
+        bval = 0;
+
+        ram_ack = 1;
+        en_cpu = 1;
+        Ram_Data = 24;
+        
+        @(negedge clk);
+        
+        en_cpu = 0;
+        addr = 16'bx;
+        WData = 'bx;
+        bval = 'bx;
+        ram_ack = 1;
+        rd_cpu = 0;
+        wr_cpu = 0;
+        
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        @(negedge cpu_clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        @(negedge clk);
+        
         @(negedge clk);
         @(negedge clk);
         @(negedge clk);

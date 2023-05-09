@@ -70,6 +70,10 @@ localparam DATA2REG = 5;
 localparam REG1_AND_ADDR2FIFO = 6;
 localparam S_ACK = 7;
 localparam CLEAR_Q = 8;
+localparam WAIT_INPUT = 9;
+localparam WAIT_OUTPUT = 10;
+localparam WRITING_DATA = 11;
+localparam READING_DATA = 12;
 
 reg empty_ram2cache = 0;
 reg full_cache2ram = 0;
@@ -96,8 +100,6 @@ reg processing_data = 0;
 always @(*) begin
     if (en_from_cache == 1)
         cache2fifo_input <= {cache_Rdata, cache_Ack}; 
-        if (cache_Ack)
-            processing_data <= 1;
 end
 
 
@@ -105,12 +107,6 @@ always @(*) begin
     if (en_cpu == 1)
         fifo2cache_input <= {WData, BVal, Addr, Rd, Wr};
 end
-
-
-always @(*) begin
-    en_to_cache <= ~empty_cpu2cache && ~processing_data;
-end
-
 
 always @(*) begin
     {RData, Ack} <= cache2fifo_output;
@@ -146,50 +142,91 @@ cpu_to_cache_fifo #() cpu_to_cache_fifo_inst (
 
 
 always @(*) begin
-	cache2fifo_read <= ~empty_cache2cpu;
-end   
-
-
-always @(*) begin
 	cpu2fifo_read <= ~empty_cpu2cache;
 end   
 
 
+always @(*) begin
+    en_to_cache <= ~empty_cpu2cache && (state == WAIT_INPUT || state == READING_DATA);
+end
+
+
+always @(*) begin
+	cpu2fifo_write <= (state == WAIT_INPUT || state == READING_DATA) && empty_cpu2cache;
+end
+
+
+always @(*) begin
+	cache2fifo_read <= ~empty_cache2cpu;
+end   
+
+
 always @(posedge cache_clk) begin
+    if(reset) begin
+        state <= IDLE;
+    end else begin
         case (state)
             IDLE: begin
-                    if (Wr)
-                        state <= DATA2REG; 
-                    else if (Rd)
-                        state <= ADDR2FIFO; 
+                    if (Wr || Rd)
+                        state <= WAIT_INPUT; 
                     else state <= IDLE;
                 end 
-            ADDR2FIFO:
-                state <= CLEAR_Q;
-          
-            CLEAR_Q:
-                state <= WAIT_DATA;
-            WAIT_DATA: begin
+            WAIT_INPUT: begin
+                if (~empty_cpu2cache)
+                    state <= READING_DATA; 
+                end 
+            READING_DATA: begin
+                if (en_from_cache)
+                    state <= WAIT_OUTPUT; 
+                end 
+            WAIT_OUTPUT: begin
                 if (~empty_cache2cpu)
-                    state <= FIFO2REG1; 
+                    state <= WRITING_DATA; 
                 end 
-            FIFO2REG1:
-                state <= S_ACK;
-            S_ACK: begin
-                state <= IDLE;
-                processing_data <= 0;
+            WRITING_DATA: begin
+                if (empty_cache2cpu)
+                    state <= IDLE; 
                 end 
-            DATA2REG: begin
-                    if (~full_cpu2cache)
-                        state <= REG1_AND_ADDR2FIFO; 
-                    else if (~Wr && Rd)
-                        state <= DATA2REG; 
-                end 
-            REG1_AND_ADDR2FIFO:
-                state <= S_ACK;
-          
-            default: state <= IDLE;
        endcase
+   end
+
+
+//    if(reset) begin
+//        state <= IDLE;
+//    end else begin
+//        case (state)
+//            IDLE: begin
+//                    if (Wr || Rd)
+//                        state <= ADDR2FIFO; 
+//                    else state <= IDLE;
+//                end 
+//            ADDR2FIFO:
+//                state <= CLEAR_Q;
+          
+//            CLEAR_Q:
+//                state <= WAIT_DATA;
+//            WAIT_DATA: begin
+//                if (~empty_cache2cpu)
+//                    state <= FIFO2REG1; 
+//                end 
+//            FIFO2REG1:
+//                state <= S_ACK;
+//            S_ACK: begin
+//                state <= IDLE;
+//                processing_data <= 0;
+//                end 
+//            DATA2REG: begin
+//                    if (~full_cpu2cache)
+//                        state <= REG1_AND_ADDR2FIFO; 
+//                    else if (~Wr && Rd)
+//                        state <= DATA2REG; 
+//                end 
+//            REG1_AND_ADDR2FIFO:
+//                state <= S_ACK;
+          
+//            default: state <= IDLE;
+//       endcase
+//   end
 end  
 
 	
@@ -215,11 +252,6 @@ end
 
 always @(*) begin
     cache_Wr    <= fifo2cache_output[0];
-end
-
-
-always @(*) begin
-	cpu2fifo_write <= (state == ADDR2FIFO || state == CLEAR_Q || state == WAIT_DATA) && empty_cpu2cache;
 end
 
 endmodule

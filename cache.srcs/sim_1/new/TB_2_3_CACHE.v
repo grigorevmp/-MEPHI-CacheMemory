@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 02.05.2023 23:21:11
+// Create Date: 08.05.2023 11:24:52
 // Design Name: 
-// Module Name: TB_2_1_CACHE
+// Module Name: TB_2_3_CACHE
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TB_2_2_CACHE();
+module TB_2_3_CACHE();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
@@ -223,4 +223,5 @@ module TB_2_2_CACHE();
         
         $finish;
     end 
+  
 endmodule

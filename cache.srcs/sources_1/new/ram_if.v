@@ -140,6 +140,9 @@ always @(*) begin
 end
 
 always @(posedge cache_clk) begin
+    if(cache_reset) begin
+        state <= IDLE;
+    end else begin
         case (state)
             IDLE: begin
                     if (en && wr)
@@ -249,6 +252,7 @@ always @(posedge cache_clk) begin
           
             default: state <= IDLE;
        endcase
+   end
 end  
 
 reg rnw_cache;
@@ -280,7 +284,7 @@ end
 //end
 
 always @(*) begin
-	cache2fifo_input <= {Addr, SHIFT_REG_CACHE2FIFO, rnw_cache, AValid_cache};
+	cache2fifo_input <= {Addr, SHIFT_REG_CACHE2FIFO[RAM_LINE - 1:0], rnw_cache, AValid_cache};
 end
 
 

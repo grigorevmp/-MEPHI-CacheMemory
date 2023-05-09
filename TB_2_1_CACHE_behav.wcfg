@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,709.001 ns"></ZoomEndTime>
-      <Cursor1Time time="650.000 ns"></Cursor1Time>
+      <ZoomEndTime time="1,510.501 ns"></ZoomEndTime>
+      <Cursor1Time time="690.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="310"></NameColumnWidth>
+      <NameColumnWidth column_width="278"></NameColumnWidth>
       <ValueColumnWidth column_width="116"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="56" />
+   <WVObjectSize size="62" />
    <wvobject fp_name="/TB_2_1_CACHE/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -28,10 +28,6 @@
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_2_1_CACHE/ram_reset" type="logic">
-      <obj_property name="ElementShortName">ram_reset</obj_property>
-      <obj_property name="ObjectShortName">ram_reset</obj_property>
-   </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/addr" type="array">
       <obj_property name="ElementShortName">addr[15:0]</obj_property>
       <obj_property name="ObjectShortName">addr[15:0]</obj_property>
@@ -39,6 +35,7 @@
    <wvobject fp_name="/TB_2_1_CACHE/WData" type="array">
       <obj_property name="ElementShortName">WData[31:0]</obj_property>
       <obj_property name="ObjectShortName">WData[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/wr_cpu" type="logic">
       <obj_property name="ElementShortName">wr_cpu</obj_property>
@@ -123,17 +120,34 @@
       <obj_property name="ElementShortName">ram_rd</obj_property>
       <obj_property name="ObjectShortName">ram_rd</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/Ack" type="logic">
-      <obj_property name="ElementShortName">Ack</obj_property>
-      <obj_property name="ObjectShortName">Ack</obj_property>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cu/plru" type="logic">
+      <obj_property name="ElementShortName">plru</obj_property>
+      <obj_property name="ObjectShortName">plru</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/m/PLRU_KS/chOut" type="array">
+      <obj_property name="ElementShortName">chOut[1:0]</obj_property>
+      <obj_property name="ObjectShortName">chOut[1:0]</obj_property>
    </wvobject>
    <wvobject type="divider" fp_name="divider71">
       <obj_property name="label">CPU_IF</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/state" type="array">
+      <obj_property name="ElementShortName">state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">state[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/en_to_cache" type="logic">
+      <obj_property name="ElementShortName">en_to_cache</obj_property>
+      <obj_property name="ObjectShortName">en_to_cache</obj_property>
+   </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_Wr" type="logic">
       <obj_property name="ElementShortName">cache_Wr</obj_property>
       <obj_property name="ObjectShortName">cache_Wr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/en_to_cache" type="logic">
+      <obj_property name="ElementShortName">en_to_cache</obj_property>
+      <obj_property name="ObjectShortName">en_to_cache</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_Rd" type="logic">
       <obj_property name="ElementShortName">cache_Rd</obj_property>
@@ -168,6 +182,14 @@
       <obj_property name="label">Ram IF</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/wr" type="logic">
+      <obj_property name="ElementShortName">wr</obj_property>
+      <obj_property name="ObjectShortName">wr</obj_property>
+   </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ram_clk" type="logic">
       <obj_property name="ElementShortName">ram_clk</obj_property>
       <obj_property name="ObjectShortName">ram_clk</obj_property>
@@ -197,6 +219,10 @@
       <obj_property name="label">TEG MEM</obj_property>
       <obj_property name="DisplayName">label</obj_property>
    </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/m/wr" type="logic">
+      <obj_property name="ElementShortName">wr</obj_property>
+      <obj_property name="ObjectShortName">wr</obj_property>
+   </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/m/chan" type="array">
       <obj_property name="ElementShortName">chan[1:0]</obj_property>
       <obj_property name="ObjectShortName">chan[1:0]</obj_property>
@@ -208,6 +234,7 @@
    <wvobject fp_name="/TB_2_1_CACHE/ca/m/tegOut" type="array">
       <obj_property name="ElementShortName">tegOut[9:0]</obj_property>
       <obj_property name="ObjectShortName">tegOut[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/m/hit" type="logic">
       <obj_property name="ElementShortName">hit</obj_property>
