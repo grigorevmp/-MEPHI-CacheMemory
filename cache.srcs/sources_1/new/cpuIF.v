@@ -63,17 +63,8 @@ reg CACHE2FIFO_LOAD;
 reg [RAM_LINE-1:0] cpu_read_data;
 
 localparam IDLE = 1;
-localparam ADDR2FIFO = 2;
-localparam WAIT_DATA = 3;
-localparam FIFO2REG1 = 4;
-localparam DATA2REG = 5;
-localparam REG1_AND_ADDR2FIFO = 6;
-localparam S_ACK = 7;
-localparam CLEAR_Q = 8;
-localparam WAIT_INPUT = 9;
-localparam WAIT_OUTPUT = 10;
-localparam WRITING_DATA = 11;
-localparam READING_DATA = 12;
+localparam WAIT_INPUT = 2;
+localparam READING_DATA = 3;
 
 reg empty_ram2cache = 0;
 reg full_cache2ram = 0;
@@ -96,162 +87,182 @@ reg [SYS_WIDTH + 1 - 1:0] cache2fifo_input;
 wire [SYS_WIDTH + 1 - 1:0] cache2fifo_output ;
 
 reg processing_data = 0;
+reg frozen = 1;
 
-always @(*) begin
-    if (en_from_cache == 1)
-        cache2fifo_input <= {cache_Rdata, cache_Ack}; 
+
+reg cpu = 0;
+reg cache = 0;
+
+
+always @(posedge cpu_clk) begin
+    if (Wr || Rd) begin
+        fifo2cache_input <= {WData, Addr, BVal, Rd, Wr};
+        cpu = 1;
+    end
 end
-
-
-always @(*) begin
-    if (en_cpu == 1)
-        fifo2cache_input <= {WData, BVal, Addr, Rd, Wr};
-end
-
-always @(*) begin
-    {RData, Ack} <= cache2fifo_output;
-end
-
-
-cache_to_cpu_fifo #() cache_to_cpu_fifo_ins (
-    .wr_clk(cache_clk),
-    .wr_rst(reset),
-    .rd_clk(cpu_clk),
-    .rd_rst(cpu_reset),
-    .din(cache2fifo_input),
-    .wr_en(cache_Ack),
-    .rd_en(cache2fifo_read),
-    .dout(cache2fifo_output),
-    .full(full_cache2cpu),
-    .empty(empty_cache2cpu)
-);
-
-
-cpu_to_cache_fifo #() cpu_to_cache_fifo_inst (
-    .wr_clk(cpu_clk),
-    .wr_rst(cpu_reset),
-    .rd_clk(cache_clk),
-    .rd_rst(reset),
-    .din(fifo2cache_input),
-    .wr_en(cpu2fifo_write),
-    .rd_en(cpu2fifo_read),
-    .dout(fifo2cache_output),
-    .full(full_cpu2cache),
-    .empty(empty_cpu2cache)
-);
-
-
-always @(*) begin
-	cpu2fifo_read <= ~empty_cpu2cache;
-end   
-
-
-always @(*) begin
-    en_to_cache <= ~empty_cpu2cache && (state == WAIT_INPUT || state == READING_DATA);
-end
-
-
-always @(*) begin
-	cpu2fifo_write <= (state == WAIT_INPUT || state == READING_DATA) && empty_cpu2cache;
-end
-
-
-always @(*) begin
-	cache2fifo_read <= ~empty_cache2cpu;
-end   
 
 
 always @(posedge cache_clk) begin
-    if(reset) begin
-        state <= IDLE;
-    end else begin
-        case (state)
-            IDLE: begin
-                    if (Wr || Rd)
-                        state <= WAIT_INPUT; 
-                    else state <= IDLE;
-                end 
-            WAIT_INPUT: begin
-                if (~empty_cpu2cache)
-                    state <= READING_DATA; 
-                end 
-            READING_DATA: begin
-                if (en_from_cache)
-                    state <= WAIT_OUTPUT; 
-                end 
-            WAIT_OUTPUT: begin
-                if (~empty_cache2cpu)
-                    state <= WRITING_DATA; 
-                end 
-            WRITING_DATA: begin
-                if (empty_cache2cpu)
-                    state <= IDLE; 
-                end 
-       endcase
-   end
+    if (cpu) begin
+            cache_WData <= fifo2cache_input[53 : 22];
+            cache_Addr  <= fifo2cache_input[21 : 6];
+            cache_BVal  <= fifo2cache_input[5 : 2];
+            cache_Rd    <= fifo2cache_input[1];
+            cache_Wr    <= fifo2cache_input[0];
+            en_to_cache    <= 1;
+        cpu = 0;
+    end else if(en_to_cache && (cache_Rd || cache_Wr)) begin
+            cache_Rd    <= 0;
+            cache_Wr    <= 0;
+    end else 
+        en_to_cache    <= 0;
+end
 
 
+always @(posedge cache_clk) begin
+    if (cache_Ack) begin
+        cache2fifo_input <= {cache_Rdata, cache_Ack}; 
+        cache = 1;
+    end
+end
+
+
+always @(posedge cpu_clk) begin
+    if (cache) begin
+        RData <= cache2fifo_input[SYS_WIDTH+1-1:1];
+        Ack   <= cache2fifo_input[0];
+        cache = 0;
+    end else
+        Ack <= 0;
+end
+
+
+
+
+//always @(*) begin
+//    if (en_from_cache == 1)
+//        cache2fifo_input <= {cache_Rdata, cache_Ack}; 
+//end
+
+
+//always @(*) begin
+//    if (en_cpu == 1)
+//        fifo2cache_input <= {WData, Addr, BVal, Rd, Wr};
+//end
+
+//always @(*) begin
+//    RData <= cache2fifo_output[SYS_WIDTH+1-1:1];
+//    Ack <= ~frozen && cache2fifo_output[0];
+//end
+
+//always @(posedge cache_clk) begin
+//    if (Ack) 
+//     frozen <= 1;
+//    if (cache_Ack) 
+//     frozen <= 0;
+//end
+
+
+//cache_to_cpu_fifo #() cache_to_cpu_fifo_ins (
+//    .wr_clk(cache_clk),
+//    .wr_rst(reset),
+//    .rd_clk(cpu_clk),
+//    .rd_rst(cpu_reset),
+//    .din(cache2fifo_input),
+//    .wr_en(cache_Ack),
+//    .rd_en(cache2fifo_read),
+//    .dout(cache2fifo_output),
+//    .full(full_cache2cpu),
+//    .empty(empty_cache2cpu)
+//);
+
+
+//cpu_to_cache_fifo #() cpu_to_cache_fifo_inst (
+//    .wr_clk(cpu_clk),
+//    .wr_rst(cpu_reset),
+//    .rd_clk(cache_clk),
+//    .rd_rst(reset),
+//    .din(fifo2cache_input),
+//    .wr_en(cpu2fifo_write),
+//    .rd_en(cpu2fifo_read),
+//    .dout(fifo2cache_output),
+//    .full(full_cpu2cache),
+//    .empty(empty_cpu2cache)
+//);
+
+
+//always @(*) begin
+//	cpu2fifo_read <= ~empty_cpu2cache;
+//end   
+
+
+//reg was_enabled = 0;
+
+//always @(*) begin
+//    en_to_cache <= ~empty_cpu2cache && (state == WAIT_INPUT || state == READING_DATA) && ~was_enabled;
+    
+//end
+
+//always @(negedge en_to_cache) begin
+//        was_enabled = 1;
+//end
+
+
+//always @(*) begin
+//	cpu2fifo_write <= (state == WAIT_INPUT || state == READING_DATA) && empty_cpu2cache;
+//end
+
+
+//always @(*) begin
+//	cache2fifo_read <= ~empty_cache2cpu;
+//end   
+
+
+//always @(posedge cache_clk) begin
 //    if(reset) begin
 //        state <= IDLE;
 //    end else begin
 //        case (state)
 //            IDLE: begin
-//                    if (Wr || Rd)
-//                        state <= ADDR2FIFO; 
+//                    if (Wr == 1 || Rd == 1 || en_from_cache == 1)
+//                        state <= WAIT_INPUT; 
 //                    else state <= IDLE;
+//                    was_enabled <= 0;
 //                end 
-//            ADDR2FIFO:
-//                state <= CLEAR_Q;
-          
-//            CLEAR_Q:
-//                state <= WAIT_DATA;
-//            WAIT_DATA: begin
-//                if (~empty_cache2cpu)
-//                    state <= FIFO2REG1; 
+//            WAIT_INPUT: begin
+//                if (~empty_cpu2cache)
+//                    state <= READING_DATA; 
 //                end 
-//            FIFO2REG1:
-//                state <= S_ACK;
-//            S_ACK: begin
-//                state <= IDLE;
-//                processing_data <= 0;
-//                end 
-//            DATA2REG: begin
-//                    if (~full_cpu2cache)
-//                        state <= REG1_AND_ADDR2FIFO; 
-//                    else if (~Wr && Rd)
-//                        state <= DATA2REG; 
-//                end 
-//            REG1_AND_ADDR2FIFO:
-//                state <= S_ACK;
-          
-//            default: state <= IDLE;
+//            READING_DATA: begin
+//                    state <= IDLE; 
+//            end             
 //       endcase
 //   end
-end  
+//end  
 
 	
-always @(*) begin
-    cache_WData <= fifo2cache_output[54 : 22];
-end
+//always @(*) begin
+//    cache_WData <= fifo2cache_output[53 : 22];
+//end
 
 
-always @(*) begin
-    cache_Addr  <= fifo2cache_output[22 : 6];
-end
+//always @(*) begin
+//    cache_Addr  <= fifo2cache_output[21 : 6];
+//end
 
 
-always @(*) begin
-    cache_BVal  <= fifo2cache_output[6 : 2];
-end
+//always @(*) begin
+//    cache_BVal  <= fifo2cache_output[5 : 2];
+//end
 
 
-always @(*) begin
-    cache_Rd    <= fifo2cache_output[1];
-end
+//always @(*) begin
+//    cache_Rd    <= fifo2cache_output[1];
+//end
 
 
-always @(*) begin
-    cache_Wr    <= fifo2cache_output[0];
-end
+//always @(*) begin
+//    cache_Wr    <= fifo2cache_output[0];
+//end
 
 endmodule

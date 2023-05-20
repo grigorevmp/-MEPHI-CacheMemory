@@ -30,7 +30,7 @@ module cache #(
   parameter RAM_LINE = 16,
   parameter RAM_ADDR_WIDTH = 12
 )(
-    input clk,
+    input cache_clk,
     input reset,
     input en_cpu,
     
@@ -110,7 +110,7 @@ module cache #(
     .AINDEX_WIDTH(AINDEX_WIDTH),
     .CHANNEL_WIDTH(CHANNEL_WIDTH)
     ) m (
-        .clk(clk), 
+        .clk(cache_clk), 
         .reset(reset), 
         .plru(plru),
         .addr(addr_t_i), 
@@ -124,7 +124,7 @@ module cache #(
     );
     
     control_unit #() cu (
-        .clk(clk),
+        .clk(cache_clk),
         .reset(reset),
         .en(en_to_cache),
         
@@ -154,7 +154,7 @@ module cache #(
         .ram_reset(ram_reset),
         .en(en_to_cache),
         
-        .cache_clk(clk),
+        .cache_clk(cache_clk),
         .cache_reset(reset),
         
         .WData(data_mem_o),
@@ -184,7 +184,7 @@ module cache #(
       .RAM_LINE(RAM_LINE)
     ) cci(
         .cpu_clk(cpu_clk),
-        .cache_clk(clk),
+        .cache_clk(cache_clk),
         .reset(reset),
         .cpu_reset(cpu_reset),
         .Addr(addr_cpu),
@@ -213,7 +213,7 @@ module cache #(
     
     // ÂÎÏÐÎÑ ÂÎÏÐÎÑ ÂÎÏÐÎÑ ÂÎÏÐÎÑ ÂÎÏÐÎÑ ÂÎÏÐÎÑ
 
-    always @(posedge clk) begin
+    always @(posedge cache_clk) begin
         case (addr_o[AINDEX_WIDTH-1:2])
             'b00: CPU_RDATA_cpu <= data_mem_o[SYS_WIDTH-1:0];
             'b01: CPU_RDATA_cpu <= data_mem_o[SYS_WIDTH*2-1:SYS_WIDTH];
@@ -225,9 +225,9 @@ module cache #(
     // KS 3
     always @(*) begin
         if (t_sel)
-            addr_t_i_from_ks3 <= addr_t_i;
+            addr_t_i_from_ks3 <= {tegOut[ATEG_WIDTH + 2 - 1:2], index};
         else 
-            addr_t_i_from_ks3 <= tegOut + index;
+            addr_t_i_from_ks3 <= addr_t_i;
     end
     
     // KS 2
@@ -247,13 +247,13 @@ module cache #(
         endcase  
         
         case (bval)
-            'b0001: cpu_valid <= word_from_offset[31:8]  + WData[7:0];
-            'b0010: cpu_valid <= word_from_offset[31:16] + WData[15:8]  + word_from_offset[7:0];
-            'b0100: cpu_valid <= word_from_offset[31:24] + WData[23:16] + word_from_offset[15:0];
-            'b1000: cpu_valid <=                           WData[31:24] + word_from_offset[23:0];
-            'b0011: cpu_valid <= word_from_offset[31:16] + WData[15:0];
-            'b1100: cpu_valid <=                           WData[31:16] + word_from_offset[15:0];
-            'b1111: cpu_valid <=                           WData[31:0];
+            'b0001: cpu_valid <= {word_from_offset[31:8],   WData[7:0]};
+            'b0010: cpu_valid <= {word_from_offset[31:16],  WData[15:8],    word_from_offset[7:0]};
+            'b0100: cpu_valid <= {word_from_offset[31:24],  WData[23:16],   word_from_offset[15:0]};
+            'b1000: cpu_valid <= {                          WData[31:24],   word_from_offset[23:0]};
+            'b0011: cpu_valid <= {word_from_offset[31:16],  WData[15:0]};
+            'b1100: cpu_valid <= {                          WData[31:16],   word_from_offset[15:0]};
+            'b1111: cpu_valid <=                            WData[31:0];
         endcase
             
         case (addr_o[AINDEX_WIDTH-1:2])
@@ -274,7 +274,7 @@ module cache #(
     reg [LINE_WIDTH*8-1:0] data_mem [2**CHANNEL_WIDTH-1:0][2**AINDEX_WIDTH-1:0];
      
     // DATA MEM
-    always @(posedge clk) begin
+    always @(posedge cache_clk) begin
       data_mem_o <= data_mem[chan][addr_i];
       if (wr_o) begin
         data_mem[chan][addr_i] <= data_mem_in;

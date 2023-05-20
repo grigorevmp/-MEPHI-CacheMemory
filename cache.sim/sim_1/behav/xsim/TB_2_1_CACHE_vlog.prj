@@ -1,7 +1,5 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  \
-"../../../../cache.gen/sources_1/ip/cpu_to_cache_fifo/sim/cpu_to_cache_fifo.v" \
-"../../../../cache.gen/sources_1/ip/cache_to_cpu_fifo/sim/cache_to_cpu_fifo.v" \
 "../../../../cache.gen/sources_1/ip/fifo_generator_1/sim/fifo_generator_1.v" \
 "../../../../cache.gen/sources_1/ip/fifo_generator_0_1/sim/fifo_generator_0.v" \
 "../../../../cache.srcs/sources_1/new/cache.v" \

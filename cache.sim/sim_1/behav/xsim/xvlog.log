@@ -1,7 +1,3 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.gen/sources_1/ip/cpu_to_cache_fifo/sim/cpu_to_cache_fifo.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module cpu_to_cache_fifo
-INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.gen/sources_1/ip/cache_to_cpu_fifo/sim/cache_to_cpu_fifo.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module cache_to_cpu_fifo
 INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_1/sim/fifo_generator_1.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module fifo_generator_1
 INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_0_1/sim/fifo_generator_0.v" into library xil_defaultlib

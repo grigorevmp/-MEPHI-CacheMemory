@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TB_2_1_CACHE();
+module TB_2_0_CACHE();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
@@ -31,7 +31,7 @@ module TB_2_1_CACHE();
     localparam RAM_LINE = 16;
     localparam RAM_ADDR_WIDTH = 12;
     
-    reg clk = 'b0;
+    reg cache_clk = 'b0;
     reg reset = 'b1;
     
     reg ram_clk = 'b0;
@@ -70,7 +70,7 @@ module TB_2_1_CACHE();
         .AINDEX_WIDTH(AINDEX_WIDTH),
         .CHANNEL_WIDTH(CHANNEL_WIDTH)
     ) ca (
-        .clk(clk), 
+        .cache_clk(cache_clk), 
         .reset(reset), 
         .en_cpu(en_cpu),
         .ram_clk(ram_clk), 
@@ -99,10 +99,12 @@ module TB_2_1_CACHE();
 
     );
     
-    always #10 clk <= ~clk; 
     always #20 ram_clk <= ~ram_clk;
-    always #20 cpu_clk <= ~cpu_clk;
+    always #10 cache_clk <= ~cache_clk; 
+    always #5 cpu_clk <= ~cpu_clk;
     
+        
+    integer i;
 
     initial #30 begin
     
@@ -112,11 +114,14 @@ module TB_2_1_CACHE();
         ram_reset = 1;
         cpu_reset = 1;
         
-        @(negedge clk);
+        @(negedge cache_clk);
         
         reset = 0;
         ram_reset = 0;
         cpu_reset = 0;
+        
+        for(i=0; i<2; i=i+1)
+            @(negedge ram_clk);
         
         /////////////////////////
         /////////////////////////
@@ -135,91 +140,50 @@ module TB_2_1_CACHE();
         ram_ack = 1;
         en_cpu = 1;
         
-        @(negedge clk);
+        @(negedge cache_clk);
         
         en_cpu = 0;
-        addr = 16'bx;
-        WData = 'bx;
+        addr = 16'b0;
+        WData = 'b0;
         Ram_Data = 32;
-        bval = 'bx;
+        bval = 'b0;
         ram_ack = 1;
         rd_cpu = 0;
         wr_cpu = 0;
         
-        @(negedge cpu_clk);
-        @(negedge cpu_clk);
-        @(negedge cpu_clk);
-        @(negedge cpu_clk);
-        @(negedge clk);
-        @(negedge cpu_clk);
+        for(i=0; i<20; i=i+1)
+            @(negedge ram_clk);
+       
         
-        @(negedge clk);
-        @(negedge cpu_clk);
-        @(negedge clk);
-        @(negedge cpu_clk);
-        @(negedge clk);
-        @(negedge cpu_clk);
-        @(negedge clk);
+        /////////////////////////
+        /////////////////////////
+        ////// TEST CASE 1 //////
+        /////////////////////////
+        /////////////////////////
         
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
+        addr = 16'b00110011_0011_0000;
+        rd_cpu = 1;
         
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
+        WData = 3;
+        Ram_Data = 32;
+        bval = 0;
+
+        ram_ack = 1;
+        en_cpu = 1;
         
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
+        @(negedge cache_clk);
         
-        ram_ack = 0;
+        en_cpu = 0;
+        addr = 16'b0;
+        WData = 'b0;
+        Ram_Data = 32;
+        bval = 'b0;
+        ram_ack = 1;
         rd_cpu = 0;
         wr_cpu = 0;
+        
+        for(i=0; i<10; i=i+1)
+            @(negedge ram_clk);
         
         $finish;
     end 

@@ -126,13 +126,13 @@ reg [4:0] state = IDLE;
 
 always @(posedge cache_clk) begin
     if (CACHE2FIFO_LOAD) SHIFT_REG_CACHE2FIFO <= WData;
-    else if (CACHE2FIFO_SHIFT) SHIFT_REG_CACHE2FIFO <= SHIFT_REG_CACHE2FIFO[RAM_LINE - 1:0] + SHIFT_REG_CACHE2FIFO[CACHE_LINE - 1:RAM_LINE];
+    else if (CACHE2FIFO_SHIFT) SHIFT_REG_CACHE2FIFO <= {SHIFT_REG_CACHE2FIFO[RAM_LINE - 1:0], SHIFT_REG_CACHE2FIFO[CACHE_LINE - 1:RAM_LINE]};
 end
 
 
 always @(posedge cache_clk) begin
     if (fifo2cache_load) 
-        shift_reg_fifo2cache <= ram_read_data + shift_reg_fifo2cache[CACHE_LINE - 1 : RAM_LINE];
+        shift_reg_fifo2cache <= {ram_read_data, shift_reg_fifo2cache[CACHE_LINE - 1 : RAM_LINE]};
 end
 
 always @(*) begin
@@ -338,7 +338,7 @@ end
 
 
 always @(*) begin
-	ack <= (state == ACK_RD || state == REG2TOFIFO);
+	ack <= (state == ACK_RD || state == REG2TOFIFO || state == DATA2REG);
 end        
 
 

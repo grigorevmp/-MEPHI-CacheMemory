@@ -89,7 +89,7 @@ module tegMem #(
         hitCh <= j;
       end
     end
-  end
+  end   
   
   // PLRU KS
   plru PLRU_KS (
