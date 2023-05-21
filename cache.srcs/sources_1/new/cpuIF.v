@@ -95,7 +95,7 @@ reg cache = 0;
 
 
 always @(posedge cpu_clk) begin
-    if (Wr || Rd) begin
+    if (Wr == 1 || Rd == 1) begin
         fifo2cache_input <= {WData, Addr, BVal, Rd, Wr};
         cpu = 1;
     end
@@ -103,19 +103,24 @@ end
 
 
 always @(posedge cache_clk) begin
-    if (cpu) begin
-            cache_WData <= fifo2cache_input[53 : 22];
-            cache_Addr  <= fifo2cache_input[21 : 6];
-            cache_BVal  <= fifo2cache_input[5 : 2];
-            cache_Rd    <= fifo2cache_input[1];
-            cache_Wr    <= fifo2cache_input[0];
-            en_to_cache    <= 1;
+    if (cpu == 1) begin
+        cache_WData <= fifo2cache_input[53 : 22];
+        cache_Addr  <= fifo2cache_input[21 : 6];
+        cache_BVal  <= fifo2cache_input[5 : 2];
+        cache_Rd    <= fifo2cache_input[1];
+        cache_Wr    <= fifo2cache_input[0];
+        en_to_cache    <= 1;
         cpu = 0;
-    end else if(en_to_cache && (cache_Rd || cache_Wr)) begin
+    end else if(en_to_cache && cache_Ack==1) begin
             cache_Rd    <= 0;
             cache_Wr    <= 0;
-    end else 
-        en_to_cache    <= 0;
+            en_to_cache    <= 0;
+//    end else if(en_to_cache && (cache_Rd || cache_Wr)) begin
+//            cache_Rd    <= 0;
+//            cache_Wr    <= 0;
+//    end else 
+//        en_to_cache    <= 1; // Always 1, remove that
+    end
 end
 
 
@@ -137,6 +142,7 @@ always @(posedge cpu_clk) begin
 end
 
 
+// OLD 
 
 
 //always @(*) begin

@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TB_2_1_CACHE();
+module AUTO_2();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
@@ -105,9 +105,12 @@ module TB_2_1_CACHE();
     
     reg [ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0] addr_c;
     
-
+    
+    
+    
     always @(posedge cache_clk) begin
         Ram_Data <= {addr_c, 'b0};
+    
     end
 
     integer i;

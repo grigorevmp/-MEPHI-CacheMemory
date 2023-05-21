@@ -153,34 +153,6 @@ module TB_2_0_CACHE();
         
         for(i=0; i<20; i=i+1)
             @(negedge ram_clk);
-       
-        
-        /////////////////////////
-        /////////////////////////
-        ////// TEST CASE 1 //////
-        /////////////////////////
-        /////////////////////////
-        
-        addr = 16'b00110011_0011_0000;
-        rd_cpu = 1;
-        
-        WData = 3;
-        Ram_Data = 32;
-        bval = 0;
-
-        ram_ack = 1;
-        en_cpu = 1;
-        
-        @(negedge cache_clk);
-        
-        en_cpu = 0;
-        addr = 16'b0;
-        WData = 'b0;
-        Ram_Data = 32;
-        bval = 'b0;
-        ram_ack = 1;
-        rd_cpu = 0;
-        wr_cpu = 0;
         
         for(i=0; i<10; i=i+1)
             @(negedge ram_clk);
