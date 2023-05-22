@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 02.05.2023 23:21:11
+// Create Date: 22.05.2023 22:37:11
 // Design Name: 
-// Module Name: TB_2_1_CACHE
+// Module Name: tb_cache_AUTO_1
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -98,71 +98,67 @@ module TB_2_1_CACHE();
         .state_ram(state)
 
     );
-    
+
     always #32 ram_clk <= ~ram_clk;
     always #10 cache_clk <= ~cache_clk; 
     always #3 cpu_clk <= ~cpu_clk;
     
-    
+    reg [RAM_LINE - 1:0] data_urandom;
     reg [ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0] addr_urandom;
     reg [CACHE_LINE - 1:0] Full_read_line;
     reg [SYS_WIDTH-1:0] real_r_data;
-
+    
     integer i;
     integer j;
+    integer wrong = 0;
     integer test_mem_size;
     integer test_mem_factor;
     integer full_size;
-        
-    initial #30 begin
     
-        // RESET 
-        
+    initial #30 begin 
+       // RESET
         reset = 1;
         ram_reset = 1;
         cpu_reset = 1;
         
-        @(negedge ram_clk);
-        @(negedge cpu_clk);
-            
+        @(negedge cache_clk);
         reset = 0;
         ram_reset = 0;
         cpu_reset = 0;
         
-        for(i=0; i<5; i=i+1)
-            @(negedge ram_clk);
-                
-        /////////////////////////
-        /////////////////////////
-       
-        // Для теста
-        // == Кэшу
-        // == 2 Кэша
-        // == 4 Кэша
-        // == ОП
-        test_mem_size = 64;
-        test_mem_factor = 4;
-        full_size = test_mem_size * test_mem_factor;
+        for (i=0; i<10; i=i+1)
+            @(negedge cache_clk);
+        // MAX
+        test_mem_size = 32 * 1024;
+        // STEP
+        test_mem_factor = 16; 
+        // ITERS
+        full_size = test_mem_size / test_mem_factor + 10;
+        
         
         $display("Tests started");
      
         for(j=0; j<full_size; j=j+1) begin
                 
             $display("Iteration, %d", j + 1);
-        
             @(posedge cpu_clk);
-            
             addr_urandom = $random;
+            data_urandom = $random;
             addr = addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0];
             $display("Addr: %b", addr);
-            rd_cpu = 1;
+            wr_cpu = addr_urandom[0];
+            rd_cpu = ~wr_cpu;
+            if (addr_urandom[0])
+                $display("WRITE");
+            else
+                $display("READ");
             WData = 3;
             Ram_Data = 0;
-            bval = 'b1111;
+            bval = 0;
             ram_ack = 0;
             en_cpu = 1;
             
-            @(negedge cpu_clk)
+            @(negedge cpu_clk);
             
             en_cpu = 0;
             addr = 16'b0;
@@ -170,56 +166,49 @@ module TB_2_1_CACHE();
             bval = 'b0;
             rd_cpu = 0;
             wr_cpu = 0;   
-            
             while (Rnw == 0 && ack == 0)
                 @(negedge cpu_clk);
-                
-            if (Rnw) begin 
+            if (Rnw) begin
                 @(negedge ram_clk);
-                Ram_Data = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
-                $display("RData: %d", Ram_Data);
-                ram_ack = 1;
-                
+                    Ram_Data = data_urandom[RAM_LINE - 1:0];
+                    $display("RData: %d", Ram_Data);
+                    ram_ack = 1;
+                    
                 for(i=0; i<8; i=i+1)
                     @(negedge ram_clk);
-                    
                 ram_ack = 0;
                 Ram_Data = 0;
                 
                 while (ack == 0)
                     @(negedge cpu_clk);
+                Full_read_line = {data_urandom[RAM_LINE-1:0],data_urandom[RAM_LINE-1:0],data_urandom[RAM_LINE-1:0],data_urandom[RAM_LINE-1:0],data_urandom[RAM_LINE-1:0],data_urandom[RAM_LINE-1:0],data_urandom[RAM_LINE-1:0],data_urandom[RAM_LINE-1:0]};
             
-                @(negedge cpu_clk);
+                case (addr_urandom[AOFFSET_WIDTH - 1])
+                    'b0: real_r_data = Full_read_line[SYS_WIDTH-1:0];
+                    'b1: real_r_data = Full_read_line[SYS_WIDTH*2-1:SYS_WIDTH];
+                endcase
                 
-                Full_read_line = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
-                
-                case (addr_urandom[AINDEX_WIDTH-1:2])
-                    'b00: real_r_data = Full_read_line[SYS_WIDTH-1:0];
-                    'b01: real_r_data = Full_read_line[SYS_WIDTH*2-1:SYS_WIDTH];
-                    'b10: real_r_data = Full_read_line[SYS_WIDTH*3-1:SYS_WIDTH*2];
-                    'b11: real_r_data = Full_read_line[SYS_WIDTH*4-1:SYS_WIDTH*3];
-                endcase  
-                
-                // $display("Got res: %h", Full_read_line);
-                // $display("Got res: %h", real_r_data);
-                // $display("Real res: %h", CPU_RData);
-                    
                 if (CPU_RData == real_r_data)
-                    $display("Result: Valid");
-                else
-                    $display("Result: !!!!!!!!!!!!!!!!!!!!! INVALID");
-                    
+                    $display("Valid cpu - %d, ram - %d", CPU_RData, real_r_data);
+                else begin
+                    $display("!!!!!!!!!!!!!!!!!!!!! INVALID cpu - %d, ram - %d", CPU_RData, real_r_data);
+                    wrong = wrong + 1;
+                end
             end else
-                    $display("Wow, hit");
+                $display("HIT");
             
+            
+
             for(i=0; i<5; i=i+1)
                 @(negedge ram_clk);   
                 
         end
-        
         $display("Finished");
-                
+        $display("Wrong %d", wrong);
+
+        
         $finish;
-    end 
-  
+        
+    end
+
 endmodule
