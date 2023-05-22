@@ -129,7 +129,7 @@ module TB_2_1_CACHE();
         ram_reset = 0;
         cpu_reset = 0;
         
-        for(i=0; i<2; i=i+1)
+        for(i=0; i<5; i=i+1)
             @(negedge ram_clk);
                 
         /////////////////////////
@@ -141,7 +141,7 @@ module TB_2_1_CACHE();
         // == 4 Êýøà
         // == ÎÏ
         test_mem_size = 64;
-        test_mem_factor = 1;
+        test_mem_factor = 4;
         full_size = test_mem_size * test_mem_factor;
         
         $display("Tests started");
@@ -170,11 +170,12 @@ module TB_2_1_CACHE();
             bval = 'b0;
             rd_cpu = 0;
             wr_cpu = 0;   
-                        
+            
             while (Rnw == 0 && ack == 0)
-                @(negedge ram_clk);
+                @(negedge cpu_clk);
                 
             if (Rnw) begin 
+                @(negedge ram_clk);
                 Ram_Data = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
                 $display("RData: %d", Ram_Data);
                 ram_ack = 1;
@@ -188,27 +189,28 @@ module TB_2_1_CACHE();
                 while (ack == 0)
                     @(negedge cpu_clk);
             
-            end  
-            
-            @(negedge cpu_clk);
-            
-            Full_read_line = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
-            
-            case (addr_urandom[AINDEX_WIDTH-1:2])
-                'b00: real_r_data = Full_read_line[SYS_WIDTH-1:0];
-                'b01: real_r_data = Full_read_line[SYS_WIDTH*2-1:SYS_WIDTH];
-                'b10: real_r_data = Full_read_line[SYS_WIDTH*3-1:SYS_WIDTH*2];
-                'b11: real_r_data = Full_read_line[SYS_WIDTH*4-1:SYS_WIDTH*3];
-            endcase  
-            
-            // $display("Got res: %h", Full_read_line);
-            // $display("Got res: %h", real_r_data);
-            // $display("Real res: %h", CPU_RData);
+                @(negedge cpu_clk);
                 
-            if (CPU_RData == real_r_data)
-                $display("Result: Valid");
-            else
-                $display("Result: !!!!!!!!!!!!!!!!!!!!! INVALID");
+                Full_read_line = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
+                
+                case (addr_urandom[AINDEX_WIDTH-1:2])
+                    'b00: real_r_data = Full_read_line[SYS_WIDTH-1:0];
+                    'b01: real_r_data = Full_read_line[SYS_WIDTH*2-1:SYS_WIDTH];
+                    'b10: real_r_data = Full_read_line[SYS_WIDTH*3-1:SYS_WIDTH*2];
+                    'b11: real_r_data = Full_read_line[SYS_WIDTH*4-1:SYS_WIDTH*3];
+                endcase  
+                
+                // $display("Got res: %h", Full_read_line);
+                // $display("Got res: %h", real_r_data);
+                // $display("Real res: %h", CPU_RData);
+                    
+                if (CPU_RData == real_r_data)
+                    $display("Result: Valid");
+                else
+                    $display("Result: !!!!!!!!!!!!!!!!!!!!! INVALID");
+                    
+            end else
+                    $display("Wow, hit");
             
             for(i=0; i<5; i=i+1)
                 @(negedge ram_clk);   
