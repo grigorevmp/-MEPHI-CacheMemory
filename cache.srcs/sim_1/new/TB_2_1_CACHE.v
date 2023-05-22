@@ -147,17 +147,19 @@ module TB_2_1_CACHE();
                 
             $display("Iteration, %d", j + 1);
         
+            @(posedge cpu_clk);
+            
             addr_urandom = $random;
             addr = addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0];
             $display("Addr: %b", addr);
             rd_cpu = 1;
             WData = 3;
             Ram_Data = 0;
-            bval = 0;
+            bval = 'b1111;
             ram_ack = 0;
             en_cpu = 1;
             
-            @(negedge cpu_clk);
+            @(negedge cpu_clk)
             
             en_cpu = 0;
             addr = 16'b0;
@@ -165,19 +167,29 @@ module TB_2_1_CACHE();
             bval = 'b0;
             rd_cpu = 0;
             wr_cpu = 0;   
-            
-            @(negedge ram_clk);
+                        
+            while (Rnw == 0 && ack == 0)
+                @(negedge ram_clk);
+                
+            if (Rnw) begin 
                 Ram_Data = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
                 $display("RData: %d", Ram_Data);
                 ram_ack = 1;
-            
-            @(negedge ram_clk);
-                Ram_Data = 0;
-            
-            while (ack == 0)
-                @(negedge cpu_clk);
                 
-            if (CPU_RData == Ram_Data)
+                @(negedge ram_clk);
+                
+                for(i=0; i<7; i=i+1)
+                    @(negedge ram_clk);
+                    
+                ram_ack = 0;
+                Ram_Data = 0;
+                
+                while (ack == 0)
+                    @(negedge cpu_clk);
+            
+            end
+            
+            if (CPU_RData == {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0], addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]})
                 $display("Result: Valid");
             else
                 $display("Result: !!!!!!!!!!!!!!!!!!!!! INVALID");

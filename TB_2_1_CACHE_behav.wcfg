@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="3,960.001 ns"></ZoomEndTime>
-      <Cursor1Time time="3,960.000 ns"></Cursor1Time>
+      <ZoomStartTime time="5,637.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="6,072.601 ns"></ZoomEndTime>
+      <Cursor1Time time="6,000.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="266"></NameColumnWidth>
-      <ValueColumnWidth column_width="98"></ValueColumnWidth>
+      <ValueColumnWidth column_width="92"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="76" />
+   <WVObjectSize size="75" />
    <wvobject fp_name="/TB_2_1_CACHE/cache_clk" type="logic">
       <obj_property name="ElementShortName">cache_clk</obj_property>
       <obj_property name="ObjectShortName">cache_clk</obj_property>
@@ -222,10 +222,6 @@
       <obj_property name="ElementShortName">state[4:0]</obj_property>
       <obj_property name="ObjectShortName">state[4:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/CACHE2FIFO_LOAD" type="logic">
-      <obj_property name="ElementShortName">CACHE2FIFO_LOAD</obj_property>
-      <obj_property name="ObjectShortName">CACHE2FIFO_LOAD</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/ri/WData" type="array">
       <obj_property name="ElementShortName">WData[127:0]</obj_property>
