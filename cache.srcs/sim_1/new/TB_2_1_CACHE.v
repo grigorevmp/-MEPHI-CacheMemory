@@ -65,6 +65,7 @@ module TB_2_1_CACHE();
     wire [RAM_LINE-1:0] WData_ram;
     wire AValid;
     
+    
     cache #(
         .ATEG_WIDTH(ATEG_WIDTH),
         .AINDEX_WIDTH(AINDEX_WIDTH),
@@ -104,6 +105,8 @@ module TB_2_1_CACHE();
     
     
     reg [ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0] addr_urandom;
+    reg [CACHE_LINE - 1:0] Full_read_line;
+    reg [SYS_WIDTH-1:0] real_r_data;
 
     integer i;
     integer j;
@@ -176,9 +179,7 @@ module TB_2_1_CACHE();
                 $display("RData: %d", Ram_Data);
                 ram_ack = 1;
                 
-                @(negedge ram_clk);
-                
-                for(i=0; i<7; i=i+1)
+                for(i=0; i<8; i=i+1)
                     @(negedge ram_clk);
                     
                 ram_ack = 0;
@@ -187,9 +188,24 @@ module TB_2_1_CACHE();
                 while (ack == 0)
                     @(negedge cpu_clk);
             
-            end
+            end  
             
-            if (CPU_RData == {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0], addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]})
+            @(negedge cpu_clk);
+            
+            Full_read_line = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
+            
+            case (addr_urandom[AINDEX_WIDTH-1:2])
+                'b00: real_r_data = Full_read_line[SYS_WIDTH-1:0];
+                'b01: real_r_data = Full_read_line[SYS_WIDTH*2-1:SYS_WIDTH];
+                'b10: real_r_data = Full_read_line[SYS_WIDTH*3-1:SYS_WIDTH*2];
+                'b11: real_r_data = Full_read_line[SYS_WIDTH*4-1:SYS_WIDTH*3];
+            endcase  
+            
+            // $display("Got res: %h", Full_read_line);
+            // $display("Got res: %h", real_r_data);
+            // $display("Real res: %h", CPU_RData);
+                
+            if (CPU_RData == real_r_data)
                 $display("Result: Valid");
             else
                 $display("Result: !!!!!!!!!!!!!!!!!!!!! INVALID");

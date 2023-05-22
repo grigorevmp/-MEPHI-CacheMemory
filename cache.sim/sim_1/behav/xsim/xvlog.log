@@ -1,0 +1,26 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_1/sim/fifo_generator_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fifo_generator_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_0_1/sim/fifo_generator_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fifo_generator_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sources_1/new/cache.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cache
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sources_1/new/control_unit.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module control_unit
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sources_1/new/cpuIF.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cpuIF
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sources_1/new/plru.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module plru
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sources_1/new/ram_if.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ram_if
+WARNING: [VRFC 10-3248] data object 'empty_ram2cache' is already declared [D:/Coding/Vivado/cache/cache.srcs/sources_1/new/ram_if.v:120]
+WARNING: [VRFC 10-9364] second declaration of 'empty_ram2cache' is ignored [D:/Coding/Vivado/cache/cache.srcs/sources_1/new/ram_if.v:120]
+WARNING: [VRFC 10-3248] data object 'full_cache2ram' is already declared [D:/Coding/Vivado/cache/cache.srcs/sources_1/new/ram_if.v:121]
+WARNING: [VRFC 10-9364] second declaration of 'full_cache2ram' is ignored [D:/Coding/Vivado/cache/cache.srcs/sources_1/new/ram_if.v:121]
+WARNING: [VRFC 10-9336] redeclaration of ANSI port 'state' is not allowed [D:/Coding/Vivado/cache/cache.srcs/sources_1/new/ram_if.v:123]
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sources_1/new/tegMem.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tegMem
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sources_1/new/tegMemCh.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tegMemChannel
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_1_CACHE.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module TB_2_1_CACHE
+WARNING: [VRFC 10-1581] illegal format specifier " for display [D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_1_CACHE.v:206]

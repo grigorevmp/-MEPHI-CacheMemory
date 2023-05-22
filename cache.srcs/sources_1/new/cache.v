@@ -252,6 +252,7 @@ module cache #(
             'b0011: cpu_valid <= {word_from_offset[31:16],  WData[15:0]};
             'b1100: cpu_valid <= {                          WData[31:16],   word_from_offset[15:0]};
             'b1111: cpu_valid <=                            WData[31:0];
+            default: cpu_valid <= word_from_offset[31:0];
         endcase
             
         case (addr_o[AINDEX_WIDTH-1:2])
