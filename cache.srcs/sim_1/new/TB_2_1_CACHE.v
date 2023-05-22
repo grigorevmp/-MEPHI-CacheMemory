@@ -39,7 +39,7 @@ module TB_2_1_CACHE();
     reg ram_reset = 'b1;
     reg cpu_reset = 'b1;
     
-    reg [ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0] addr = 16'b00001111_0000_0000;
+    reg [ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0] addr = 0;
     
     reg [SYS_WIDTH-1:0] WData;
     reg [RAM_LINE-1:0] Ram_Data;
@@ -147,8 +147,9 @@ module TB_2_1_CACHE();
                 
             $display("Iteration, %d", j + 1);
         
-            addr_urandom = $urandom;
-            addr = addr_urandom;
+            addr_urandom = $random;
+            addr = addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0];
+            $display("Addr: %b", addr);
             rd_cpu = 1;
             WData = 3;
             Ram_Data = 0;
@@ -166,7 +167,8 @@ module TB_2_1_CACHE();
             wr_cpu = 0;   
             
             @(negedge ram_clk);
-                Ram_Data = {addr_urandom, 'b0};
+                Ram_Data = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
+                $display("RData: %d", Ram_Data);
                 ram_ack = 1;
             
             @(negedge ram_clk);
@@ -176,9 +178,9 @@ module TB_2_1_CACHE();
                 @(negedge cpu_clk);
                 
             if (CPU_RData == Ram_Data)
-                $display("Valid");
+                $display("Result: Valid");
             else
-                $display("!!!!!!!!!!!!!!!!!!!!! INVALID");
+                $display("Result: !!!!!!!!!!!!!!!!!!!!! INVALID");
             
             for(i=0; i<5; i=i+1)
                 @(negedge ram_clk);   
