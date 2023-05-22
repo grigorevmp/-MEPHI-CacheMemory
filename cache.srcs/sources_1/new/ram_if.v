@@ -192,7 +192,7 @@ always @(posedge cache_clk) begin
                 end
             
             FIFO2REG7: begin
-                    if (~state) state <= FIFO2REG8;
+                    if (~empty_ram2cache) state <= FIFO2REG8;
                     else state <= FIFO2REG7;
                 end
             
@@ -338,7 +338,7 @@ end
 
 
 always @(*) begin
-	ack <= (state == ACK_RD || state == REG2TOFIFO || state == DATA2REG);
+	ack <= (state == ACK_RD || state == ACK_WR);
 end        
 
 

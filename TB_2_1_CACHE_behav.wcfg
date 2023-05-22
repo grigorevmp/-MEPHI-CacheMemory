@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="1,059.001 ns"></ZoomEndTime>
-      <Cursor1Time time="858.000 ns"></Cursor1Time>
+      <ZoomEndTime time="10,770.001 ns"></ZoomEndTime>
+      <Cursor1Time time="3,070.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="232"></NameColumnWidth>
-      <ValueColumnWidth column_width="186"></ValueColumnWidth>
+      <NameColumnWidth column_width="266"></NameColumnWidth>
+      <ValueColumnWidth column_width="116"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="57" />
+   <WVObjectSize size="67" />
    <wvobject fp_name="/TB_2_1_CACHE/cache_clk" type="logic">
       <obj_property name="ElementShortName">cache_clk</obj_property>
       <obj_property name="ObjectShortName">cache_clk</obj_property>
@@ -50,16 +50,16 @@
       <obj_property name="ObjectShortName">bval[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/Ram_Data" type="array">
-      <obj_property name="ElementShortName">Ram_Data[0:15]</obj_property>
-      <obj_property name="ObjectShortName">Ram_Data[0:15]</obj_property>
+      <obj_property name="ElementShortName">Ram_Data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">Ram_Data[15:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      <obj_property name="Reversed">true</obj_property>
+      <obj_property name="Reversed">false</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/CPU_RData" type="array">
-      <obj_property name="ElementShortName">CPU_RData[0:31]</obj_property>
-      <obj_property name="ObjectShortName">CPU_RData[0:31]</obj_property>
+      <obj_property name="ElementShortName">CPU_RData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CPU_RData[31:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-      <obj_property name="Reversed">true</obj_property>
+      <obj_property name="Reversed">false</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ack" type="logic">
       <obj_property name="ElementShortName">ack</obj_property>
@@ -76,6 +76,7 @@
    <wvobject fp_name="/TB_2_1_CACHE/WData_ram" type="array">
       <obj_property name="ElementShortName">WData_ram[15:0]</obj_property>
       <obj_property name="ObjectShortName">WData_ram[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/AValid" type="logic">
       <obj_property name="ElementShortName">AValid</obj_property>
@@ -133,19 +134,25 @@
    <wvobject fp_name="/TB_2_1_CACHE/ca/data_mem_in" type="array">
       <obj_property name="ElementShortName">data_mem_in[127:0]</obj_property>
       <obj_property name="ObjectShortName">data_mem_in[127:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/data_mem_o" type="array">
       <obj_property name="ElementShortName">data_mem_o[127:0]</obj_property>
       <obj_property name="ObjectShortName">data_mem_o[127:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/addr_o" type="array">
+      <obj_property name="ElementShortName">addr_o[3:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_o[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/CPU_RDATA_cpu" type="array">
+      <obj_property name="ElementShortName">CPU_RDATA_cpu[31:0]</obj_property>
+      <obj_property name="ObjectShortName">CPU_RDATA_cpu[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="divider" fp_name="divider71">
       <obj_property name="label">CPU_IF</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/state" type="array">
-      <obj_property name="ElementShortName">state[3:0]</obj_property>
-      <obj_property name="ObjectShortName">state[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/cci/en_to_cache" type="logic">
       <obj_property name="ElementShortName">en_to_cache</obj_property>
@@ -168,6 +175,10 @@
       <obj_property name="ElementShortName">cache_Addr[15:0]</obj_property>
       <obj_property name="ObjectShortName">cache_Addr[15:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_BVal" type="array">
+      <obj_property name="ElementShortName">cache_BVal[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cache_BVal[3:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cpu_clk" type="logic">
       <obj_property name="ElementShortName">cpu_clk</obj_property>
       <obj_property name="ObjectShortName">cpu_clk</obj_property>
@@ -176,15 +187,20 @@
       <obj_property name="ElementShortName">cache_Ack</obj_property>
       <obj_property name="ObjectShortName">cache_Ack</obj_property>
    </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/cache_Rdata" type="array">
+      <obj_property name="ElementShortName">cache_Rdata[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cache_Rdata[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/Ack" type="logic">
+      <obj_property name="ElementShortName">Ack</obj_property>
+      <obj_property name="ObjectShortName">Ack</obj_property>
+   </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/cci/RData" type="array">
       <obj_property name="ElementShortName">RData[0:31]</obj_property>
       <obj_property name="ObjectShortName">RData[0:31]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       <obj_property name="Reversed">true</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_2_1_CACHE/ca/cci/Ack" type="logic">
-      <obj_property name="ElementShortName">Ack</obj_property>
-      <obj_property name="ObjectShortName">Ack</obj_property>
    </wvobject>
    <wvobject type="divider" fp_name="divider72">
       <obj_property name="label">Ram IF</obj_property>
@@ -207,14 +223,27 @@
       <obj_property name="ObjectShortName">state[4:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/Addr_ram" type="array">
-      <obj_property name="ElementShortName">Addr_ram[11:0]</obj_property>
-      <obj_property name="ObjectShortName">Addr_ram[11:0]</obj_property>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/CACHE2FIFO_LOAD" type="logic">
+      <obj_property name="ElementShortName">CACHE2FIFO_LOAD</obj_property>
+      <obj_property name="ObjectShortName">CACHE2FIFO_LOAD</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/WData" type="array">
+      <obj_property name="ElementShortName">WData[127:0]</obj_property>
+      <obj_property name="ObjectShortName">WData[127:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/ri/WData_ram" type="array">
       <obj_property name="ElementShortName">WData_ram[15:0]</obj_property>
       <obj_property name="ObjectShortName">WData_ram[15:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/Addr" type="array">
+      <obj_property name="ElementShortName">Addr[11:0]</obj_property>
+      <obj_property name="ObjectShortName">Addr[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/Addr_ram" type="array">
+      <obj_property name="ElementShortName">Addr_ram[11:0]</obj_property>
+      <obj_property name="ObjectShortName">Addr_ram[11:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/ri/rd" type="logic">
       <obj_property name="ElementShortName">rd</obj_property>
@@ -224,9 +253,25 @@
       <obj_property name="ElementShortName">wr</obj_property>
       <obj_property name="ObjectShortName">wr</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_2_1_CACHE/ack" type="logic">
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/ack" type="logic">
       <obj_property name="ElementShortName">ack</obj_property>
       <obj_property name="ObjectShortName">ack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/ram_read_data" type="array">
+      <obj_property name="ElementShortName">ram_read_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram_read_data[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/shift_reg_fifo2cache" type="array">
+      <obj_property name="ElementShortName">shift_reg_fifo2cache[127:0]</obj_property>
+      <obj_property name="ObjectShortName">shift_reg_fifo2cache[127:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/ri/RData" type="array">
+      <obj_property name="ElementShortName">RData[127:0]</obj_property>
+      <obj_property name="ObjectShortName">RData[127:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Reversed">false</obj_property>
    </wvobject>
    <wvobject type="divider" fp_name="divider78">
       <obj_property name="label">TEG MEM</obj_property>
@@ -251,6 +296,11 @@
    <wvobject fp_name="/TB_2_1_CACHE/ca/m/index" type="array">
       <obj_property name="ElementShortName">index[3:0]</obj_property>
       <obj_property name="ObjectShortName">index[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB_2_1_CACHE/ca/m/plruCh" type="array">
+      <obj_property name="ElementShortName">plruCh[1:0]</obj_property>
+      <obj_property name="ObjectShortName">plruCh[1:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/TB_2_1_CACHE/ca/m/tegOut" type="array">
       <obj_property name="ElementShortName">tegOut[9:0]</obj_property>

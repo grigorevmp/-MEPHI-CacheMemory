@@ -210,10 +210,8 @@ module cache #(
     
     // KS 1
     // in: DATA_MEM_o, OFFSET
-    
-    // ÂÎÏÐÎÑ ÂÎÏÐÎÑ ÂÎÏÐÎÑ ÂÎÏÐÎÑ ÂÎÏÐÎÑ ÂÎÏÐÎÑ
 
-    always @(posedge cache_clk) begin
+    always @(*) begin
         case (addr_o[AINDEX_WIDTH-1:2])
             'b00: CPU_RDATA_cpu <= data_mem_o[SYS_WIDTH-1:0];
             'b01: CPU_RDATA_cpu <= data_mem_o[SYS_WIDTH*2-1:SYS_WIDTH];
@@ -271,7 +269,7 @@ module cache #(
     end
     
     // DATA MEM
-    reg [LINE_WIDTH*8-1:0] data_mem [2**CHANNEL_WIDTH-1:0][2**AINDEX_WIDTH-1:0];
+    reg [CACHE_LINE-1:0] data_mem [2**CHANNEL_WIDTH-1:0][16-1:0];
      
     // DATA MEM
     always @(posedge cache_clk) begin

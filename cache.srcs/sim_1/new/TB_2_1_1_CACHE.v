@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TB_2_0_CACHE();
+module TB_2_1C_CACHE(); 
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
@@ -99,9 +99,9 @@ module TB_2_0_CACHE();
 
     );
     
-    always #20 ram_clk <= ~ram_clk;
+    always #32 ram_clk <= ~ram_clk;
     always #10 cache_clk <= ~cache_clk; 
-    always #5 cpu_clk <= ~cpu_clk;
+    always #3 cpu_clk <= ~cpu_clk;
     
         
     integer i;
@@ -123,12 +123,13 @@ module TB_2_0_CACHE();
         for(i=0; i<2; i=i+1)
             @(negedge ram_clk);
         
-        /////////////////////////
-        /////////////////////////
-        ////// TEST CASE 1 //////
-        /////////////////////////
-        /////////////////////////
+        ////////////////////////////
+        ////////////////////////////
+        ////// TEST CASE READ //////
+        ////////////////////////////
+        ////////////////////////////
         
+        @(negedge cpu_clk);
         
         addr = 16'b00110011_0011_0000;
         rd_cpu = 1;
@@ -140,7 +141,7 @@ module TB_2_0_CACHE();
         ram_ack = 1;
         en_cpu = 1;
         
-        @(negedge cache_clk);
+        @(negedge cpu_clk);
         
         en_cpu = 0;
         addr = 16'b0;
@@ -149,13 +150,17 @@ module TB_2_0_CACHE();
         bval = 'b0;
         ram_ack = 1;
         rd_cpu = 0;
-        wr_cpu = 0;
+        wr_cpu = 0;   
         
-        for(i=0; i<20; i=i+1)
-            @(negedge ram_clk);
         
-        for(i=0; i<10; i=i+1)
+        while (ack == 0)
             @(negedge ram_clk);
+            
+        
+        for(i=0; i<5; i=i+1)
+            @(negedge ram_clk);
+            
+        addr = 16'b0;
         
         $finish;
     end 

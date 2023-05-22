@@ -57,10 +57,10 @@ module cpuIF #(
     output reg en_to_cache
 );
 
-reg [CACHE_LINE-1:0] REG_CACHE2FIFO;
-reg CACHE2FIFO_LOAD;
+reg [CACHE_LINE-1:0] REG_CACHE2FIFO = 0;
+reg CACHE2FIFO_LOAD = 0;
 
-reg [RAM_LINE-1:0] cpu_read_data;
+reg [RAM_LINE-1:0] cpu_read_data = 0;
 
 localparam IDLE = 1;
 localparam WAIT_INPUT = 2;
@@ -81,10 +81,10 @@ reg cpu2fifo_write;
 reg cpu2fifo_read;
 
 wire [SYS_WIDTH + 4 + ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH + 1 + 1 - 1:0] fifo2cache_output;
-reg [SYS_WIDTH + 4 + ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH + 1 + 1 - 1:0] fifo2cache_input ;
+reg [SYS_WIDTH + 4 + ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH + 1 + 1 - 1:0] fifo2cache_input;
 
 reg [SYS_WIDTH + 1 - 1:0] cache2fifo_input;
-wire [SYS_WIDTH + 1 - 1:0] cache2fifo_output ;
+wire [SYS_WIDTH + 1 - 1:0] cache2fifo_output;
 
 reg processing_data = 0;
 reg frozen = 1;
@@ -137,6 +137,9 @@ always @(posedge cpu_clk) begin
         RData <= cache2fifo_input[SYS_WIDTH+1-1:1];
         Ack   <= cache2fifo_input[0];
         cache = 0;
+    end else if (reset) begin
+        RData <= 0;
+        Ack <= 0;
     end else
         Ack <= 0;
 end

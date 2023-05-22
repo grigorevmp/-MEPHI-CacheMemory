@@ -23,4 +23,3 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/s
 INFO: [VRFC 10-311] analyzing module tegMemChannel
 INFO: [VRFC 10-2263] Analyzing Verilog file "D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_1_CACHE.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module TB_2_1_CACHE
-WARNING: [VRFC 10-8864] concatenation with an unsized literal will be treated as 32 bits [D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_1_CACHE.v:112]
