@@ -2,16 +2,10 @@
 2020.2
 Oct 14 2022
 05:20:55
-D:/Coding/Vivado/cache/cache.gen/sources_1/ip/cache_to_cpu_fifo/sim/cache_to_cpu_fifo.v,1683455530,verilog,,D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_1/sim/fifo_generator_1.v,,cache_to_cpu_fifo,,,,,,,,
-D:/Coding/Vivado/cache/cache.gen/sources_1/ip/cpu_to_cache_fifo/sim/cpu_to_cache_fifo.v,1683455543,verilog,,D:/Coding/Vivado/cache/cache.gen/sources_1/ip/cache_to_cpu_fifo/sim/cache_to_cpu_fifo.v,,cpu_to_cache_fifo,,,,,,,,
-D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_0_1/sim/fifo_generator_0.v,1682608561,verilog,,D:/Coding/Vivado/cache/cache.srcs/sources_1/new/cache.v,,fifo_generator_0,,,,,,,,
-D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_1/sim/fifo_generator_1.v,1682602173,verilog,,D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_0_1/sim/fifo_generator_0.v,,fifo_generator_1,,,,,,,,
+D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_0_1/sim/fifo_generator_0.v,1684778658,verilog,,D:/Coding/Vivado/cache/cache.srcs/sources_1/new/cache.v,,fifo_generator_0,,,,,,,,
+D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_1/sim/fifo_generator_1.v,1684778886,verilog,,D:/Coding/Vivado/cache/cache.gen/sources_1/ip/fifo_generator_0_1/sim/fifo_generator_0.v,,fifo_generator_1,,,,,,,,
 D:/Coding/Vivado/cache/cache.sim/sim_1/behav/xsim/glbl.v,1665704903,verilog,,,,glbl,,,,,,,,
-D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_1_1_CACHE.v,1684617825,verilog,,D:/Coding/Vivado/cache/cache.gen/sources_1/ip/cpu_to_cache_fifo/sim/cpu_to_cache_fifo.v,,,,,,,,,,
-D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_1_CACHE.v,1684770995,verilog,,D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_1_REVERSED.v,,TB_2_1_CACHE,,,,,,,,
-,,,,,,,,,,,,,,
-D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_2_CACHE.v,1683533190,verilog,,D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_3_CACHE.v,,TB_2_2_CACHE,,,,,,,,
-D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_3_CACHE.v,1684346556,verilog,,D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_cache.v,,TB_2_3_CACHE,,,,,,,,
+D:/Coding/Vivado/cache/cache.srcs/sim_1/new/TB_2_1_CACHE.v,1684784785,verilog,,,,TB_2_1_CACHE,,,,,,,,
 D:/Coding/Vivado/cache/cache.srcs/sources_1/new/cache.v,1684770568,verilog,,D:/Coding/Vivado/cache/cache.srcs/sources_1/new/control_unit.v,,cache,,,,,,,,
 D:/Coding/Vivado/cache/cache.srcs/sources_1/new/control_unit.v,1683449653,verilog,,D:/Coding/Vivado/cache/cache.srcs/sources_1/new/cpuIF.v,,control_unit,,,,,,,,
 D:/Coding/Vivado/cache/cache.srcs/sources_1/new/cpuIF.v,1684745593,verilog,,D:/Coding/Vivado/cache/cache.srcs/sources_1/new/plru.v,,cpuIF,,,,,,,,

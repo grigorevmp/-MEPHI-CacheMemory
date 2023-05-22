@@ -20,7 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TB_2_1R_CACHE(); localparam ATEG_WIDTH = 8;
+module TB_2_1R_CACHE(); 
+    localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
     localparam CHANNEL_WIDTH = 2;
@@ -98,10 +99,6 @@ module TB_2_1R_CACHE(); localparam ATEG_WIDTH = 8;
 
     );
     
-//    always #32 ram_clk <= ~ram_clk;
-//    always #10 cache_clk <= ~cache_clk; 
-//    always #3 cpu_clk <= ~cpu_clk;
-    
     always #3 ram_clk <= ~ram_clk;
     always #10 cache_clk <= ~cache_clk; 
     always #32 cpu_clk <= ~cpu_clk;
@@ -117,15 +114,15 @@ module TB_2_1R_CACHE(); localparam ATEG_WIDTH = 8;
         ram_reset = 1;
         cpu_reset = 1;
         
-        @(negedge cache_clk);
-        
+        @(negedge ram_clk);
+        @(negedge cpu_clk);
+            
         reset = 0;
         ram_reset = 0;
         cpu_reset = 0;
         
         for(i=0; i<2; i=i+1)
             @(negedge ram_clk);
-        
         ////////////////////////////
         ////////////////////////////
         ////// TEST CASE READ //////
@@ -138,10 +135,10 @@ module TB_2_1R_CACHE(); localparam ATEG_WIDTH = 8;
         rd_cpu = 1;
         
         WData = 3;
-        Ram_Data = 32;
+        Ram_Data = 0;
         bval = 0;
 
-        ram_ack = 1;
+        ram_ack = 0;
         en_cpu = 1;
         
         @(negedge cpu_clk);
@@ -149,15 +146,19 @@ module TB_2_1R_CACHE(); localparam ATEG_WIDTH = 8;
         en_cpu = 0;
         addr = 16'b0;
         WData = 'b0;
-        Ram_Data = 32;
         bval = 'b0;
-        ram_ack = 1;
         rd_cpu = 0;
         wr_cpu = 0;   
         
+        @(negedge ram_clk);
+            Ram_Data = 32;
+            ram_ack = 1;
+        
+        @(negedge ram_clk);
+            Ram_Data = 0;
         
         while (ack == 0)
-            @(negedge ram_clk);
+            @(negedge cpu_clk);
             
         
         for(i=0; i<5; i=i+1)

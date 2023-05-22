@@ -99,9 +99,9 @@ module TB_2_4_CACHE();
 
     );
     
-    always #32 ram_clk <= ~ram_clk;
+    always #3 ram_clk <= ~ram_clk;
     always #10 cache_clk <= ~cache_clk; 
-    always #3 cpu_clk <= ~cpu_clk;
+    always #32 cpu_clk <= ~cpu_clk;
     
         
     integer i;
@@ -114,8 +114,9 @@ module TB_2_4_CACHE();
         ram_reset = 1;
         cpu_reset = 1;
         
-        @(negedge cache_clk);
-        
+        @(negedge ram_clk);
+        @(negedge cpu_clk);
+            
         reset = 0;
         ram_reset = 0;
         cpu_reset = 0;
@@ -134,12 +135,10 @@ module TB_2_4_CACHE();
         addr = 16'b00110011_0011_0000;
         wr_cpu = 0;
         rd_cpu = 1;
-        
         WData = 10;
-        Ram_Data = 32;
+        Ram_Data = 0;
         bval = 4'b1111;
-
-        ram_ack = 1;
+        ram_ack = 0;
         en_cpu = 1;
         
         @(negedge cpu_clk);
@@ -148,13 +147,24 @@ module TB_2_4_CACHE();
         addr = 16'b0;
         WData = 'b0;
         bval = 0;
-        ram_ack = 1;
         rd_cpu = 0;
         wr_cpu = 0;   
         
+
+        @(negedge ram_clk);
+            Ram_Data = 32;
+            ram_ack = 1;
+        
+        @(negedge ram_clk);
+            Ram_Data = 0;
+            
+        for(i=0; i<7; i=i+1)
+            @(negedge ram_clk);
+        ram_ack = 0;
         
         while (ack == 0)
-            @(negedge cache_clk);
+            @(negedge cpu_clk);
+            
             
         
         for(i=0; i<10; i=i+1)
@@ -171,12 +181,9 @@ module TB_2_4_CACHE();
         addr = 16'b00110001_0011_0000;
         wr_cpu = 0;
         rd_cpu = 1;
-        
+        ram_ack = 0;
         WData = 11;
-        Ram_Data = 33;
         bval = 4'b1111;
-
-        ram_ack = 1;
         en_cpu = 1;
         
         @(negedge cpu_clk);
@@ -185,13 +192,23 @@ module TB_2_4_CACHE();
         addr = 16'b0;
         WData = 0;
         bval = 'b0;
-        ram_ack = 1;
         rd_cpu = 0;
         wr_cpu = 0;   
+
+        @(negedge ram_clk);
+            Ram_Data = 33;
+            ram_ack = 1;
         
+        @(negedge ram_clk);
+            Ram_Data = 0;
+            
+        for(i=0; i<7; i=i+1)
+            @(negedge ram_clk);
+        ram_ack = 0;
         
         while (ack == 0)
-            @(negedge cache_clk);
+            @(negedge cpu_clk);
+            
             
         
         for(i=0; i<10; i=i+1)
@@ -210,10 +227,8 @@ module TB_2_4_CACHE();
         rd_cpu = 1;
         
         WData = 12;
-        Ram_Data = 34;
         bval = 4'b1111;
-
-        ram_ack = 1;
+        ram_ack = 0;
         en_cpu = 1;
         
         @(negedge cpu_clk);
@@ -222,13 +237,25 @@ module TB_2_4_CACHE();
         addr = 16'b0;
         WData = 'b0;
         bval = 'b0;
-        ram_ack = 1;
         rd_cpu = 0;
         wr_cpu = 0;   
         
         
+
+        @(negedge ram_clk);
+            Ram_Data = 34;
+            ram_ack = 1;
+        
+        @(negedge ram_clk);
+            Ram_Data = 0;
+            
+        for(i=0; i<7; i=i+1)
+            @(negedge ram_clk);
+        ram_ack = 0;
+        
         while (ack == 0)
-            @(negedge cache_clk);
+            @(negedge cpu_clk);
+            
             
         
         for(i=0; i<10; i=i+1)
@@ -247,10 +274,8 @@ module TB_2_4_CACHE();
         rd_cpu = 1;
         
         WData = 13;
-        Ram_Data = 35;
         bval = 4'b1111;
-
-        ram_ack = 1;
+        ram_ack = 0;
         en_cpu = 1;
         
         @(negedge cpu_clk);
@@ -259,13 +284,23 @@ module TB_2_4_CACHE();
         addr = 16'b0;
         WData = 'b0;
         bval = 'b0;
-        ram_ack = 1;
         rd_cpu = 0;
         wr_cpu = 0;   
         
+        @(negedge ram_clk);
+            Ram_Data = 35;
+            ram_ack = 1;
+        
+        @(negedge ram_clk);
+            Ram_Data = 0;
+            
+        for(i=0; i<7; i=i+1)
+            @(negedge ram_clk);
+        ram_ack = 0;
         
         while (ack == 0)
-            @(negedge cache_clk);
+            @(negedge cpu_clk);
+            
             
         
         for(i=0; i<10; i=i+1)
@@ -273,7 +308,7 @@ module TB_2_4_CACHE();
         
         ///////////////////////////////
         ///////////////////////////////
-        ////// TEST CASE WRITE 5 //////
+        ////// TEST CASE READ 5 //////
         ///////////////////////////////
         ///////////////////////////////
         
@@ -284,10 +319,8 @@ module TB_2_4_CACHE();
         rd_cpu = 1;
         
         WData = 14;
-        Ram_Data = 36;
-        bval = 1111;
-
-        ram_ack = 1;
+        bval = 'b1111;
+        ram_ack = 0;
         en_cpu = 1;
         
         @(negedge cpu_clk);
@@ -296,19 +329,100 @@ module TB_2_4_CACHE();
         addr = 16'b0;
         WData = 'b0;
         bval = 'b0;
-        ram_ack = 1;
         rd_cpu = 0;
         wr_cpu = 0;   
         
-        
         while (ack == 0)
-            @(negedge cache_clk);
-            
+            @(negedge cpu_clk);
         
         for(i=0; i<10; i=i+1)
             @(negedge cache_clk);
+        
+        ///////////////////////////////
+        ///////////////////////////////
+        ////// TEST CASE READ 6 //////
+        ///////////////////////////////
+        ///////////////////////////////
+        
+        @(negedge cpu_clk);
+        
+        addr = 16'b01111111_0011_0000;
+        wr_cpu = 0;
+        rd_cpu = 1;
+        
+        WData = 14;
+        bval = 'b1111;
+        ram_ack = 0;
+        en_cpu = 1;
+        
+        @(negedge cpu_clk);
+        
+        en_cpu = 0;
+        addr = 16'b0;
+        WData = 'b0;
+        bval = 'b0;
+        rd_cpu = 0;
+        wr_cpu = 0;   
+
+        @(negedge ram_clk);
+            Ram_Data = 42;
+            ram_ack = 1;
+        
+        @(negedge ram_clk);
+            Ram_Data = 0;
             
+        for(i=0; i<7; i=i+1)
+            @(negedge ram_clk);
+        ram_ack = 0;
+        
+        while (ack == 0)
+            @(negedge cpu_clk);
+        
+        for(i=0; i<10; i=i+1)
+            @(negedge cache_clk);
+        
+        ///////////////////////////////
+        ///////////////////////////////
+        ////// TEST CASE READ 7 //////
+        ///////////////////////////////
+        ///////////////////////////////
+        
+        @(negedge cpu_clk);
+        
+        addr = 16'b01111111_0011_0000;
+        wr_cpu = 0;
+        rd_cpu = 1;
+        
+        WData = 14;
+        bval = 'b1111;
+        ram_ack = 0;
+        en_cpu = 1;
+        
+        @(negedge cpu_clk);
+        
+        en_cpu = 0;
+        addr = 16'b0;
+        WData = 'b0;
+        bval = 'b0;
+        rd_cpu = 0;
+        wr_cpu = 0;   
+
+        @(negedge ram_clk);
+            Ram_Data = 42;
+            ram_ack = 1;
+        
+        @(negedge ram_clk);
+            Ram_Data = 0;
             
+        for(i=0; i<7; i=i+1)
+            @(negedge ram_clk);
+        ram_ack = 0;
+        
+        while (ack == 0)
+            @(negedge cpu_clk);
+        
+        for(i=0; i<10; i=i+1)
+            @(negedge cache_clk);
         
         $finish;
     end 

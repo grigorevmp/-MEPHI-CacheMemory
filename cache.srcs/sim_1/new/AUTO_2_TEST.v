@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module AUTO_2();
+module TB_2_1A2_CACHE();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
@@ -86,7 +86,6 @@ module AUTO_2();
         .bval_cpu(bval),          
         
         // OUTPUT
-        
         .w_sel(w_sel),
         .ack(ack),
         .t_sel(t_sel),
@@ -103,15 +102,7 @@ module AUTO_2();
     always #10 cache_clk <= ~cache_clk; 
     always #20 cpu_clk <= ~cpu_clk;
     
-    reg [ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0] addr_c;
-    
-    
-    
-    
-    always @(posedge cache_clk) begin
-        Ram_Data <= {addr_c, 'b0};
-    
-    end
+    reg [ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0] addr_urandom;
 
     integer i;
     integer test_mem_size;
@@ -137,8 +128,6 @@ module AUTO_2();
         /////////////////////////
         /////////////////////////
        
-        
-        
         // Äëÿ òåñòà
         // == Êýøó
         // == 2 Êýøà
@@ -146,52 +135,50 @@ module AUTO_2();
         // == ÎÏ
         test_mem_size <= 64;
         test_mem_factor = 1;
+        
+        $display("Tests started");
      
         for(i=0; i< test_mem_size * test_mem_factor; i=i+1) begin
-            addr_c = $urandom;
+        
+            addr_urandom = $urandom;
+            addr = addr_urandom;
             
-            addr = addr_c;
-            
-            rd_cpu = 1;
-            bval = 0;
-            ram_ack = 1;
-                
-            @(negedge cache_clk);
-            
-            ram_ack = 1;
-            rd_cpu = 0;
-            wr_cpu = 0;
-            
-            for(i=0; i<20; i=i+1)
-                @(negedge ram_clk);
-            
-            addr = 16'b00110011_0011_0000;
             rd_cpu = 1;
             
             WData = 3;
-            Ram_Data = 32;
+            Ram_Data = 0;
             bval = 0;
     
-            ram_ack = 1;
+            ram_ack = 0;
             en_cpu = 1;
             
-            @(negedge cache_clk);
+            @(negedge cpu_clk);
             
             en_cpu = 0;
             addr = 16'b0;
             WData = 'b0;
-            Ram_Data = 32;
             bval = 'b0;
-            ram_ack = 1;
             rd_cpu = 0;
-            wr_cpu = 0;
+            wr_cpu = 0;   
             
-            for(i=0; i<10; i=i+1)
-                @(negedge ram_clk);
+            @(negedge ram_clk);
+                Ram_Data = {addr_urandom, 'b0};
+                ram_ack = 1;
+            
+            @(negedge ram_clk);
+                Ram_Data = 0;
+            
+            while (ack == 0)
+                @(negedge cpu_clk);
+                
+            $display("Iteration, %d", i);
+            $display("Is valid: %b", CPU_RData == Ram_Data);
+            
+            for(i=0; i<5; i=i+1)
+                @(negedge ram_clk);   
+                
         end
                 
-        
-        
         $finish;
     end 
   

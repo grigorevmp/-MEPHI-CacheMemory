@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TB_2_1_CACHE(); 
+module TB_2_1_CACHE();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
@@ -86,7 +86,6 @@ module TB_2_1_CACHE();
         .bval_cpu(bval),          
         
         // OUTPUT
-        
         .w_sel(w_sel),
         .ack(ack),
         .t_sel(t_sel),
@@ -103,9 +102,15 @@ module TB_2_1_CACHE();
     always #10 cache_clk <= ~cache_clk; 
     always #3 cpu_clk <= ~cpu_clk;
     
-        
-    integer i;
+    
+    reg [ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0] addr_urandom;
 
+    integer i;
+    integer j;
+    integer test_mem_size;
+    integer test_mem_factor;
+    integer full_size;
+        
     initial #30 begin
     
         // RESET 
@@ -114,231 +119,74 @@ module TB_2_1_CACHE();
         ram_reset = 1;
         cpu_reset = 1;
         
-        @(negedge cache_clk);
-        
+        @(negedge ram_clk);
+        @(negedge cpu_clk);
+            
         reset = 0;
         ram_reset = 0;
         cpu_reset = 0;
         
         for(i=0; i<2; i=i+1)
             @(negedge ram_clk);
-        
-        ///////////////////////////////
-        ///////////////////////////////
-        ////// TEST CASE WRITE 1 //////
-        ///////////////////////////////
-        ///////////////////////////////
-        
-        @(negedge cpu_clk);
-        
-        addr = 16'b00110011_0011_0000;
-        wr_cpu = 1;
-        rd_cpu = 0;
-        
-        WData = 10;
-        Ram_Data = 32;
-        bval = 4'b1111;
-
-        ram_ack = 1;
-        en_cpu = 1;
-        
-        @(negedge cpu_clk);
-        
-        en_cpu = 0;
-        addr = 16'b0;
-        WData = 'b0;
-        bval = 0;
-        ram_ack = 1;
-        rd_cpu = 0;
-        wr_cpu = 0;   
-        
-        
-        while (ack == 0)
-            @(negedge cpu_clk);
-            
-        
-        for(i=0; i<10; i=i+1)
-            @(negedge cpu_clk);
-        
-        ///////////////////////////////
-        ///////////////////////////////
-        ////// TEST CASE WRITE 2 //////
-        ///////////////////////////////
-        ///////////////////////////////
-        
-        @(negedge cpu_clk);
-        
-        addr = 16'b00110001_0011_0000;
-        wr_cpu = 1;
-        rd_cpu = 0;
-        
-        WData = 11;
-        Ram_Data = 33;
-        bval = 4'b1111;
-
-        ram_ack = 1;
-        en_cpu = 1;
-        
-        @(negedge cpu_clk);
-        
-        en_cpu = 0;
-        addr = 16'b0;
-        WData = 0;
-        bval = 'b0;
-        ram_ack = 1;
-        rd_cpu = 0;
-        wr_cpu = 0;   
-        
-        
-        while (ack == 0)
-            @(negedge cpu_clk);
-            
-        
-        for(i=0; i<10; i=i+1)
-            @(negedge cpu_clk);
-        
-        ///////////////////////////////
-        ///////////////////////////////
-        ////// TEST CASE WRITE 3 //////
-        ///////////////////////////////
-        ///////////////////////////////
-        
-        @(negedge cpu_clk);
-        
-        addr = 16'b00110101_0011_0000;
-        wr_cpu = 1;
-        rd_cpu = 0;
-        
-        WData = 12;
-        Ram_Data = 34;
-        bval = 4'b1111;
-
-        ram_ack = 1;
-        en_cpu = 1;
-        
-        @(negedge cpu_clk);
-        
-        en_cpu = 0;
-        addr = 16'b0;
-        WData = 'b0;
-        bval = 'b0;
-        ram_ack = 1;
-        rd_cpu = 0;
-        wr_cpu = 0;   
-        
-        
-        while (ack == 0)
-            @(negedge cpu_clk);
-            
-        
-        for(i=0; i<10; i=i+1)
-            @(negedge cpu_clk);
-        
-        ///////////////////////////////
-        ///////////////////////////////
-        ////// TEST CASE WRITE 4 //////
-        ///////////////////////////////
-        ///////////////////////////////
-        
-        @(negedge cpu_clk);
-        
-        addr = 16'b10110011_0011_0000;
-        wr_cpu = 1;
-        rd_cpu = 0;
-        
-        WData = 12;
-        Ram_Data = 35;
-        bval = 4'b1111;
-
-        ram_ack = 1;
-        en_cpu = 1;
-        
-        @(negedge cpu_clk);
-        
-        en_cpu = 0;
-        addr = 16'b0;
-        WData = 0;
-        bval = 'b0;
-        ram_ack = 1;
-        rd_cpu = 0;
-        wr_cpu = 0;   
-        
-        
-        while (ack == 0)
-            @(negedge cpu_clk);
-            
-        
-        for(i=0; i<10; i=i+1)
-            @(negedge cpu_clk);
-        
-        ///////////////////////////////
-        ///////////////////////////////
-        ////// TEST CASE WRITE 5 //////
-        ///////////////////////////////
-        ///////////////////////////////
-        
-        @(negedge cpu_clk);
-        
-        addr = 16'b01111011_0011_0000;
-        wr_cpu = 1;
-        rd_cpu = 0;
-        
-        WData = 14;
-        Ram_Data = 32;
-        bval = 4'b1111;
-
-        ram_ack = 1;
-        en_cpu = 1;
-        
-        @(negedge cpu_clk);
-        
-        en_cpu = 0;
-        addr = 16'b0;
-        WData = 0;
-        WData = 0;
-        bval = 0;
-        ram_ack = 1;
-        rd_cpu = 0;
-        wr_cpu = 0;   
-        
-        
-        while (ack == 0)
-            @(negedge cpu_clk);
-            
-        
-        for(i=0; i<10; i=i+1)
-            @(negedge cpu_clk);
-        
-            
-        ///////////////////////////////
-        ///////////////////////////////
-        ////// TEST CASE READ 1 //////
-        ///////////////////////////////
-        ///////////////////////////////
+                
+        /////////////////////////
+        /////////////////////////
        
-        addr = 16'b01111011_0011_0000;
-        rd_cpu = 1;
-        en_cpu = 1;
-        wr_cpu = 0;  
-        bval = 0;
+        // Для теста
+        // == Кэшу
+        // == 2 Кэша
+        // == 4 Кэша
+        // == ОП
+        test_mem_size = 64;
+        test_mem_factor = 1;
+        full_size = test_mem_size * test_mem_factor;
         
-        @(negedge cpu_clk);
+        $display("Tests started");
+     
+        for(j=0; j<full_size; j=j+1) begin
+                
+            $display("Iteration, %d", j + 1);
         
-        en_cpu = 0;
-        addr = 16'b0;
-        WData = 0;
-        bval = 'b0;
-        ram_ack = 1;
-        rd_cpu = 0;
-        wr_cpu = 0;   
-        
-        while (ack == 0)
+            addr_urandom = $urandom;
+            addr = addr_urandom;
+            rd_cpu = 1;
+            WData = 3;
+            Ram_Data = 0;
+            bval = 0;
+            ram_ack = 0;
+            en_cpu = 1;
+            
             @(negedge cpu_clk);
+            
+            en_cpu = 0;
+            addr = 16'b0;
+            WData = 'b0;
+            bval = 'b0;
+            rd_cpu = 0;
+            wr_cpu = 0;   
+            
+            @(negedge ram_clk);
+                Ram_Data = {addr_urandom, 'b0};
+                ram_ack = 1;
+            
+            @(negedge ram_clk);
+                Ram_Data = 0;
+            
+            while (ack == 0)
+                @(negedge cpu_clk);
+                
+            if (CPU_RData == Ram_Data)
+                $display("Valid");
+            else
+                $display("!!!!!!!!!!!!!!!!!!!!! INVALID");
+            
+            for(i=0; i<5; i=i+1)
+                @(negedge ram_clk);   
+                
+        end
         
-        for(i=0; i<10; i=i+1)
-            @(negedge cpu_clk);
-        en_cpu = 0;
-        
+        $display("Finished");
+                
         $finish;
     end 
   
