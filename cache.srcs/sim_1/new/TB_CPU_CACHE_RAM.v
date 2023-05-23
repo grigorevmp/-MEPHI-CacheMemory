@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 23.05.2023 10:56:07
+// Create Date: 23.05.2023 11:14:01
 // Design Name: 
-// Module Name: TB_READ_MISS_HIT
+// Module Name: TB_CPU_CACHE_RAM
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,10 +19,11 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+
 // TB_2_1_CACHE
-// TB_READ_MISS_HIT
+// TB_CPU_CACHE_RAM
 // ram_clk >> cache_clk >> cpu_clk
-module TB_2_1_CACHE();
+module TB_CPU_CACHE_RAM();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
@@ -101,9 +102,9 @@ module TB_2_1_CACHE();
 
     );
     
-    always #32 ram_clk <= ~ram_clk;
+    always #3 ram_clk <= ~ram_clk;
     always #10 cache_clk <= ~cache_clk; 
-    always #3 cpu_clk <= ~cpu_clk;
+    always #32 cpu_clk <= ~cpu_clk;
     
         
     integer i;
@@ -154,7 +155,7 @@ module TB_2_1_CACHE();
         
         ///////////////////////////////
         while (Rnw == 0 && ack == 0)
-            @(negedge cpu_clk);
+            @(negedge ram_clk);
             
         if (Rnw) begin 
             @(negedge ram_clk);
@@ -171,7 +172,8 @@ module TB_2_1_CACHE();
             while (ack == 0)
                 @(negedge cpu_clk);
          end
-            
+        ///////////////////////////////
+        
         for(i=0; i<5; i=i+1)
             @(negedge ram_clk);
             

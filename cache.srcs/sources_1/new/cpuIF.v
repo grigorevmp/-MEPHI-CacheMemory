@@ -115,6 +115,15 @@ always @(posedge cache_clk) begin
             cache_Rd    <= 0;
             cache_Wr    <= 0;
             en_to_cache    <= 0;
+    end else if (reset) begin
+        cache_WData <= 0;
+        cache_Addr  <= 0;
+        cache_BVal  <= 0;
+        cache_Rd    <= 0;
+        cache_Wr    <= 0;
+        en_to_cache <= 0;
+        cpu = 0;
+    
 //    end else if(en_to_cache && (cache_Rd || cache_Wr)) begin
 //            cache_Rd    <= 0;
 //            cache_Wr    <= 0;

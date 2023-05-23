@@ -237,7 +237,7 @@ module cache #(
     reg [CACHE_LINE - 1:0] data_with_bval;
     reg [CACHE_LINE - 1:0] bvalKS;
     always @(*) begin
-        case (addr_o[AINDEX_WIDTH-1:2])
+        case (addr_o[AOFFSET_WIDTH-1:2])
             'b00: word_from_offset <= data_mem_o[SYS_WIDTH-1:0];
             'b01: word_from_offset <= data_mem_o[SYS_WIDTH*2-1:SYS_WIDTH];
             'b10: word_from_offset <= data_mem_o[SYS_WIDTH*3-1:SYS_WIDTH*2];
@@ -255,10 +255,10 @@ module cache #(
             default: cpu_valid <= word_from_offset[31:0];
         endcase
             
-        case (addr_o[AINDEX_WIDTH-1:2])
+        case (addr_o[AOFFSET_WIDTH-1:2])
             'b00: data_with_bval <= { data_mem_o[SYS_WIDTH*4-1:SYS_WIDTH],   cpu_valid                              };
             'b01: data_with_bval <= { data_mem_o[SYS_WIDTH*4-1:SYS_WIDTH*2], cpu_valid, data_mem_o[SYS_WIDTH-1:0]   };
-            'b01: data_with_bval <= { data_mem_o[SYS_WIDTH*4-1:SYS_WIDTH*3], cpu_valid, data_mem_o[SYS_WIDTH*2-1:0] };
+            'b10: data_with_bval <= { data_mem_o[SYS_WIDTH*4-1:SYS_WIDTH*3], cpu_valid, data_mem_o[SYS_WIDTH*2-1:0] };
             'b11: data_with_bval <= {                                        cpu_valid, data_mem_o[SYS_WIDTH*3-1:0] };
         endcase  
         

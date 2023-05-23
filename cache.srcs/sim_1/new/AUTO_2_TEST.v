@@ -20,6 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
+
+// TB_2_1_CACHE
+// TB_2_1A_CACHE
 module TB_2_1A_CACHE();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
@@ -65,6 +68,7 @@ module TB_2_1A_CACHE();
     wire [RAM_LINE-1:0] WData_ram;
     wire AValid;
     
+    reg [SYS_WIDTH-1:0] valid_data [4096 - 1:0];
     
     cache #(
         .ATEG_WIDTH(ATEG_WIDTH),
@@ -113,6 +117,7 @@ module TB_2_1A_CACHE();
     integer test_mem_size;
     integer test_mem_factor;
     integer full_size;
+    integer wrong = 0;
         
     initial #30 begin
     
@@ -172,7 +177,7 @@ module TB_2_1A_CACHE();
             if (Rnw) begin 
                 @(negedge ram_clk);
                 Ram_Data = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
-                $display("RData: %d", Ram_Data);
+                $display("RData: %h", Ram_Data);
                 ram_ack = 1;
                 
                 for(i=0; i<8; i=i+1)
@@ -188,12 +193,14 @@ module TB_2_1A_CACHE();
                 
                 Full_read_line = {addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0],addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:0]};
                 
-                case (addr_urandom[AINDEX_WIDTH-1:2])
+                case (addr_urandom[AOFFSET_WIDTH-1:2])
                     'b00: real_r_data = Full_read_line[SYS_WIDTH-1:0];
                     'b01: real_r_data = Full_read_line[SYS_WIDTH*2-1:SYS_WIDTH];
                     'b10: real_r_data = Full_read_line[SYS_WIDTH*3-1:SYS_WIDTH*2];
                     'b11: real_r_data = Full_read_line[SYS_WIDTH*4-1:SYS_WIDTH*3];
                 endcase  
+                
+                valid_data[addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1:AOFFSET_WIDTH]] = real_r_data;
                 
                 // $display("Got res: %h", Full_read_line);
                 // $display("Got res: %h", real_r_data);
@@ -201,15 +208,31 @@ module TB_2_1A_CACHE();
                     
                 if (CPU_RData == real_r_data)
                     $display("Result: Valid");
-                else
+                else begin
+                    wrong = wrong + 1;
                     $display("Result: !!!!!!!!!!!!!!!!!!!!! INVALID");
+                end
                     
-            end else
-                    $display("Wow, hit"); 
+                    
+            end else begin
+                $display("Hit");
+                $display("Current: %h", CPU_RData);
+                $display("Real: %h", valid_data[addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1: AOFFSET_WIDTH]]
+                );
+                if (CPU_RData == valid_data[addr_urandom[ATEG_WIDTH + AINDEX_WIDTH + AOFFSET_WIDTH - 1: AOFFSET_WIDTH]])
+                    $display("Result: Valid");
+                else begin
+                    $display("Result: !!!!!!!!!!!!!!!!!!!!! INVALID");
+                    wrong = wrong + 1;
+                end
+                    
+             end
                 
         end
         
+        $display("==================================");
         $display("Finished");
+        $display("Wrong: %d", wrong);
                 
         $finish;
     end 

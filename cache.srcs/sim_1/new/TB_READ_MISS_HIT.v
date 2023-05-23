@@ -22,7 +22,7 @@
 // TB_2_1_CACHE
 // TB_READ_MISS_HIT
 // ram_clk >> cache_clk >> cpu_clk
-module TB_2_1_CACHE();
+module TB_READ_MISS_HIT();
     localparam ATEG_WIDTH = 8;
     localparam AINDEX_WIDTH = 4;
     localparam AOFFSET_WIDTH = 4;
